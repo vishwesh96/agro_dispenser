@@ -110,7 +110,7 @@ BEGIN
       wait for clk_period*2;
 		rst<='0';
 		wait for clk_period*25;
-		land_state(0)<="011";
+--		land_state(0)<="011";
 --		wait for clk_period*40;
 --		land_state(0)<="010";
       -- insert stimulus here 
