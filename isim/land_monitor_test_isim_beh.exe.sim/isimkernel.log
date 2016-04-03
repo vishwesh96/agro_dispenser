@@ -1,0 +1,29 @@
+Command line:
+   land_monitor_test_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  56908
+
+Mon Apr  4 00:17:43 2016
+
+
+ Elaboration Time: 0.01 sec
+
+ Current Memory Usage: 196.317 Meg
+
+ Total Signals          : 23
+ Total Nets             : 474
+ Total Signal Drivers   : 8
+ Total Blocks           : 6
+ Total Primitive Blocks : 5
+ Total Processes        : 3
+ Total Traceable Variables  : 11
+ Total Scalar Nets and Variables : 853
+Total Line Count : 25
+
+ Total Simulation Time: 0.03 sec
+
+ Current Memory Usage: 271.819 Meg
+
+Mon Apr  4 00:51:17 2016
+

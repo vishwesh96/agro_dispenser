@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_test_isim_beh.exe" -prj "/home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_test_beh.prj" "work.land_monitor_test" 
