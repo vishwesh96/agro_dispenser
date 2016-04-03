@@ -1,0 +1,3 @@
+vhdl work "types.vhd"
+vhdl work "humidity_checker.vhd"
+vhdl work "humidity_checker_test.vhd"
