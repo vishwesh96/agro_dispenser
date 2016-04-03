@@ -1,4 +1,4 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_test_isim_beh.exe -prj /home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_test_beh.prj work.land_monitor_test 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_test_isim_beh.exe" -prj "/home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_test_beh.prj" "work.land_monitor_test" 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
@@ -9,7 +9,7 @@ Parsing VHDL file "/home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_t
 Starting static elaboration
 Completed static elaboration
 Fuse Memory Usage: 98164 KB
-Fuse CPU Usage: 1130 ms
+Fuse CPU Usage: 1200 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package types
@@ -22,6 +22,6 @@ Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
 Compiled 9 VHDL Units
 Built simulation executable /home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/land_monitor_test_isim_beh.exe
-Fuse Memory Usage: 676084 KB
-Fuse CPU Usage: 1300 ms
-GCC CPU Usage: 280 ms
+Fuse Memory Usage: 676104 KB
+Fuse CPU Usage: 1320 ms
+GCC CPU Usage: 150 ms

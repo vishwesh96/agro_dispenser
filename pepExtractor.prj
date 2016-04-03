@@ -1,2 +1,2 @@
-work	"land_monitor.vhd"
+work	"humidity_checker.vhd"
 work	"types.vhd"

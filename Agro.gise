@@ -26,19 +26,22 @@
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="ipcore_dir/coregen.log"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_CMD" xil_pn:name="isim.cmd"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_LOG" xil_pn:name="isim.log"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="land_monitor_test_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="land_monitor_test_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="land_monitor_test_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="land_monitor_test_stx_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tiller_test_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tiller_test_stx_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1459724985" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1459724985">
+    <transform xil_pn:end_ts="1458840021" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1458840021">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1459724985" xil_pn:in_ck="-2962627830142820017" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1459724985">
+    <transform xil_pn:end_ts="1459718849" xil_pn:in_ck="-2962627830142820017" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1459718849">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="cutter.vhd"/>
@@ -54,28 +57,31 @@
       <outfile xil_pn:name="waterer.vhd"/>
       <outfile xil_pn:name="waterer_queue.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1459724987" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-8282724236456242245" xil_pn:start_ts="1459724987">
+    <transform xil_pn:end_ts="1459685794" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-8282724236456242245" xil_pn:start_ts="1459685794">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1459724987" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="2159159619743465017" xil_pn:start_ts="1459724987">
+    <transform xil_pn:end_ts="1459685794" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="2159159619743465017" xil_pn:start_ts="1459685794">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1459724987" xil_pn:in_ck="2640052728245442763" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="6159191723925361506" xil_pn:start_ts="1459724987">
+    <transform xil_pn:end_ts="1458840021" xil_pn:in_ck="2640052728245442763" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="6159191723925361506" xil_pn:start_ts="1458840021">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="ipcore_dir/fifo.ngc"/>
       <outfile xil_pn:name="ipcore_dir/fifo.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1459724987" xil_pn:in_ck="671350761350842194" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1459724987">
+    <transform xil_pn:end_ts="1459717003" xil_pn:in_ck="-2962627830142820017" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1459717003">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="cutter.vhd"/>
       <outfile xil_pn:name="cutter_queue.vhd"/>
       <outfile xil_pn:name="dispenser.vhd"/>
       <outfile xil_pn:name="dispenser_queue.vhd"/>
-      <outfile xil_pn:name="ipcore_dir/fifo.vhd"/>
       <outfile xil_pn:name="land_monitor.vhd"/>
       <outfile xil_pn:name="land_monitor_test.vhd"/>
       <outfile xil_pn:name="tiller.vhd"/>
@@ -85,21 +91,29 @@
       <outfile xil_pn:name="waterer.vhd"/>
       <outfile xil_pn:name="waterer_queue.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1459724988" xil_pn:in_ck="671350761350842194" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="4572655921451326198" xil_pn:start_ts="1459724987">
+    <transform xil_pn:end_ts="1459717004" xil_pn:in_ck="671350761350842194" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="4572655921451326198" xil_pn:start_ts="1459717003">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="InputChanged"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="fuse.log"/>
       <outfile xil_pn:name="isim"/>
+      <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="land_monitor_test_beh.prj"/>
       <outfile xil_pn:name="land_monitor_test_isim_beh.exe"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1459724989" xil_pn:in_ck="-5098833884052417868" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="5644130347344023619" xil_pn:start_ts="1459724988">
+    <transform xil_pn:end_ts="1459717004" xil_pn:in_ck="-6957783434930786162" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="5644130347344023619" xil_pn:start_ts="1459717004">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="isim.cmd"/>
+      <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="land_monitor_test_isim_beh.wdb"/>
     </transform>
     <transform xil_pn:name="TRAN_SubProjectAbstractToPreProxy">
