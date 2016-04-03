@@ -21,6 +21,8 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.types.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -50,27 +52,37 @@ begin
 	process(clk)
 	begin
 	if rising_edge(clk) then
+		for i in 0 to 7 loop
+			area(i)<=std_logic_vector(shift_right(unsigned(len*breadth),3)) ;
+		end loop;
 		if rst='1' then
 			water_request<="00000000";
 			crop_ht<=("000","000","000","000","000","000","000","000");
 			barren_count<=("00000000","00000000","00000000","00000000","00000000","00000000","00000000","00000000");
-			land_state<=("000","000","000","000","000","000","000","000");
 			for i in 0 to 7 loop
 				area(i)<=len*breadth;
 			end loop;
 		else
 			for i in 0 to 7 loop
-				if not (land_state(i)="000" or land_state(i)="001" or land_state(i)="010" ) then
+				if not (land_state(i)="000" or land_state(i)="001" or land_state(i)="010" ) then --barren or tilling states
+					barren_count(i)<="00000000";
 					barren_counter(i)<="00000000";
 				else
 					if not(barren_counter(i)="00001111") then
 						barren_counter(i)<=barren_counter(i)+1;
 					else
 						barren_counter(i)<="00000000";
-						for i in 0 to 7 loop
-							barren_count(i) <= barren_count(i)+1; 
-						end loop	;	
+						barren_count(i) <= barren_count(i)+1; 
 					end if;
+				end if;
+				if land_state(i)="101" then				--water request is high only when land 
+					if humidity_check(i)(0)='1' then		-- state is seeds sown and and humidity(i)(0)
+						water_request(i)<='1';				-- is 1
+					else
+						water_request(i)<='0';					
+					end if;
+				else
+					water_request(i)<='0';				
 				end if;
 			end loop;
 														--	else
