@@ -48,9 +48,9 @@ ARCHITECTURE behavior OF land_monitor_test IS
          land_state : IN  eight_three;
          barren_count : INOUT  eight_eight;
          humidity_check : IN  eight_eight;
-         crop_ht : INOUT  eight_three;
          duration : IN  eight_ten;
          area : OUT  eight_sixteen;
+			cutting_request : inout STD_LOGIC_VECTOR(7 downto 0);
          water_request : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
@@ -62,13 +62,12 @@ ARCHITECTURE behavior OF land_monitor_test IS
    signal len : STD_LOGIC_VECTOR(7 downto 0) :="00001010";
    signal breadth : std_logic_vector(7 downto 0) := "00000011";
    signal humidity_check : eight_eight:= (others => (others => '0'));
-   signal duration : eight_ten := (others => (others => '0'));
+   signal duration : eight_ten := ("0000000001","0000000001","0000000001","0000000001","0000000001","0000000001","0000000001","0000000001");
 
 	--BiDirs
    signal land_state : eight_three;
    signal barren_count : eight_eight;
-   signal crop_ht : eight_three;
-
+	signal cutting_request : std_logic_vector(7 downto 0);
  	--Outputs
    signal area : eight_sixteen;
    signal water_request : std_logic_vector(7 downto 0);
@@ -87,9 +86,9 @@ BEGIN
           land_state => land_state,
           barren_count => barren_count,
           humidity_check => humidity_check,
-          crop_ht => crop_ht,
           duration => duration,
           area => area,
+			 cutting_request=>cutting_request,
           water_request => water_request
         );
 
@@ -118,7 +117,7 @@ BEGIN
 		wait for clk_period*6;
 		humidity_check(0)(0)<='0';
  		wait for clk_period*38;
-		land_state(1)<="010";
+		land_state(0)<="111";
       -- insert stimulus here 
 
       wait;
