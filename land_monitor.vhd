@@ -33,16 +33,15 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity land_monitor is
-	Generic( dts : integer :=10);
+	Generic( dts : std_logic_vector(21 downto 0) :="0000000000000000011111");
     Port ( rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
            len : in  STD_LOGIC_VECTOR(7 downto 0);
            breadth : in  STD_LOGIC_VECTOR(7 downto 0);
-           land_state : in  eight_three;
+           land_state : in eight_three;
            barren_count : inout  eight_eight;
            humidity_check : in  eight_eight;
-           crop_ht : in  eight_three;
-			  cutting_request : out STD_LOGIC_VECTOR(7 downto 0);
+			  cutting_request : inout STD_LOGIC_VECTOR(7 downto 0);
            duration : in  eight_ten;
            area : out  eight_sixteen;
            water_request  : out  STD_LOGIC_VECTOR(7 downto 0));
@@ -52,6 +51,7 @@ architecture Behavioral of land_monitor is
 signal barren_counter :  eight_eight:=("00000000","00000000","00000000","00000000","00000000","00000000","00000000","00000000");
 signal height_counter : eight_32:=("00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000"); 
 signal height_rates : eight_32:=("00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000","00000000000000000000000000000000"); 
+signal crop_ht : eight_three:=("000","000","000","000","000","000","000","000");
 begin
 	process(clk)
 	begin
@@ -82,7 +82,7 @@ begin
 					end if;
 				end if;
 				
-				if not (land_state="101" or land_state="110") then
+				if not (land_state(i)="101" or land_state(i)="110") then
 						crop_ht(i)<="000";
 						cutting_request(i)<='0';
 						height_counter(i)<="00000000000000000000000000000000";
