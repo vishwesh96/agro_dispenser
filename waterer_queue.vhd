@@ -52,7 +52,6 @@ COMPONENT fifo
     empty : OUT STD_LOGIC
   );
 END COMPONENT;
-
 	signal empty : STD_LOGIC:='0';
 	signal full : STD_LOGIC:='0';
 	signal din : STD_LOGIC_VECTOR(7 downto 0):="00000000";
@@ -63,6 +62,9 @@ END COMPONENT;
 	signal counter : STD_LOGIC_VECTOR(21 downto 0):="0000000000000000000000";
 	signal present : STD_LOGIC_VECTOR(7 downto 0):="00000000"; -- request present
 	signal pop : STD_LOGIC_VECTOR(7 downto 0):="00000000"; 	  -- popped request
+	signal read_counter : STD_LOGIC_VECTOR(2 downto 0):="000";
+	signal grant_counter : STD_LOGIC_VECTOR(2 downto 0):="000";
+	signal rd_en_prev : STD_LOGIC:='0';
 begin
 fifo1 : fifo
 
@@ -89,10 +91,24 @@ process(clk)
 				pop<="00000000";
 				start<='0';	
 				din<="00000000";
+				read_counter<="000";
+				grant_counter<="000";
+				rd_en_prev<='1';
 			else
-				rd_en<='0';
+				if(rd_en='0' and rd_en_prev ='1') then-- and grant_counter="010") then
+					water_gnt<=dout;
+--					grant_counter<="000";
+--				elsif not (grant_counter="010") then
+--					grant_counter<= grant_counter+1;
+				end if;
+				
+				if rd_en='1' then 
+					rd_en<='0';
+				end if;
+
 				pop<= dout;
 				wr_en<='0';
+				
 				if (water_request(0)='1' and not(present(0)='1')) then
 					din<="00000001";
 					present(0)<='1';
@@ -126,18 +142,17 @@ process(clk)
 					present(7)<='1';
 					wr_en<='1';
 				end if;
-				if(rd_en='1') then
-					water_gnt<=dout;
-				end if;
+				
 				if start = '1' then
 					counter <=counter +'1';
 				end if;
-				
-				for i in 0 to 7 loop
-					if pop(i)='1' then
-						present(i)<='0';
-					end if;
-				end loop;	
+				if read_counter="010" then
+					for i in 0 to 7 loop
+						if pop(i)='1' then
+							present(i)<='0';
+						end if;
+					end loop;	
+				end if;
 
 				for i in 0 to 7 loop
 					if(watering(i)='1' and counter=dts) then
@@ -147,11 +162,15 @@ process(clk)
 						--dout<="00000000";
 					end if;
 				end loop;
-				
-				if (watering  = "00000000") and (empty='0') then
+	
+				if (watering  = "00000000") and (empty='0') and (read_counter="100") then
 					rd_en<='1';
 					start<='1';
+					read_counter<="000";
+				elsif not (read_counter="100") then
+					read_counter<=read_counter+1;
 				end if;
+			rd_en_prev<=rd_en;
 			end if;				
 		end if;
 	end process;
