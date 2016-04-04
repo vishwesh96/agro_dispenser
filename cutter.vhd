@@ -48,6 +48,7 @@ end cutter;
 --7 cutting
 
 architecture Behavioral of cutter is
+signal cut_gnt_prev : STD_LOGIC_VECTOR(7 downto 0):="00000000";
 begin
 	process(clk,cut_gnt)
 	begin
@@ -62,14 +63,17 @@ begin
 							land_state(i) <= "111";
 						elsif(land_state(i) = "101") then
 							land_state(i) <= "111";
-
 						else
+						end if;
+					else
+						if(cut_gnt_prev(i) = '1') then
+							land_state(i) <= "000";
 						end if;
 					end if;
 				end loop;
 			end if;
 		else
-		
+		cut_gnt_prev <= cut_gnt;
 		end if;	
 	end process;
 end Behavioral;

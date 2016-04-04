@@ -31,7 +31,7 @@ use work.types.all;
 --use UNISIM.VComponents.all;
 
 entity dispenser is
-    Port ( land_state : inout  eight_three:= ("110","101","000","000","000","000","000","000");
+    Port ( land_state : inout  eight_three:= ("011","011","000","000","000","000","000","000");
            rst : in  STD_LOGIC;
            dispense_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
@@ -48,8 +48,9 @@ end dispenser;
 --7 cutting
 
 architecture Behavioral of dispenser is
+signal dispense_gnt_prev : STD_LOGIC_VECTOR(7 downto 0):="00000000";
 begin
-	process(clk,dispense_gnt)
+	process(clk)
 	begin
 		if rising_edge(clk) then
 			if	rst='1' then
@@ -57,16 +58,12 @@ begin
 			else
 				dispensing<=dispense_gnt;				
 				for i in 0 to 7 loop
-					if(dispense_gnt(i) = '1') then
-						if(land_state(i) = "011") then
-							land_state(i) <= "101";
-							--";
-						end if;
+					if(dispense_gnt_prev(i) = '1' and dispense_gnt(i) = '0') then
+						land_state(i) <= "101";
 					end if;
 				end loop;
 			end if;
-		else
-		
+		dispense_gnt_prev <= dispense_gnt;
 		end if;	
 	end process;
 end Behavioral;

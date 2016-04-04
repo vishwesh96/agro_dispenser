@@ -103,7 +103,8 @@ BEGIN
 			water_gnt <= "00000000";
       wait for clk_period*10;
 			water_gnt <= "00000010";
-									
+      wait for clk_period*10;
+			water_gnt <= "00000000";									
 
       -- insert stimulus here 
 
