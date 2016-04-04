@@ -59,8 +59,8 @@ begin
 				for i in 0 to 7 loop
 					if(dispense_gnt(i) = '1') then
 						if(land_state(i) = "011") then
-							land_state(i) <= "101
-							";
+							land_state(i) <= "101";
+							--";
 						end if;
 					end if;
 				end loop;

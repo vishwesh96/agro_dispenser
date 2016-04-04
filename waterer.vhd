@@ -54,23 +54,24 @@ begin
 		if rising_edge(clk) then
 			if	rst='1' then
 				watering<="00000000";
-			else
-				watering<=water_gnt;				
-				for i in 0 to 7 loop
-					if(water_gnt(i) = '1') then
-						if(land_state(i) = "011") then
-							land_state(i) <= "100";
-						elsif(land_state(i) = "101") then
-							land_state(i) <= "110";
-
-						else
-						end if;
-					end if;
-				end loop;
+			--else
+			--	watering<=water_gnt;				
+--				for i in 0 to 7 loop
+--					if(water_gnt(i) = '1') then
+--						if(land_state(i) = "011") then
+--							land_state(i) <= "100";
+--						elsif(land_state(i) = "101") then
+--							land_state(i) <= "110";
+--						else
+--						end if;
+--					end if;
+--				end loop;
 			end if;
 		else
-		
-		end if;	
+			if not(rising_edge(clk) or falling_edge(clk)) then
+				watering<=water_gnt;				
+			end if;	
+		end if;
 	end process;
 end Behavioral;
 
