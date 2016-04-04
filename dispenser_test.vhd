@@ -4,13 +4,13 @@
 --
 -- Create Date:   17:42:22 04/04/2016
 -- Design Name:   
--- Module Name:   /home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/cutter_test.vhd
+-- Module Name:   /home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/dispenser_test.vhd
 -- Project Name:  Agro
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: cutter
+-- VHDL Test Bench Created by ISE for module: dispenser
 -- 
 -- Dependencies:
 -- 
@@ -33,34 +33,34 @@ use work.types.all;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY cutter_test IS
-END cutter_test;
+ENTITY dispenser_test IS
+END dispenser_test;
  
-ARCHITECTURE behavior OF cutter_test IS 
+ARCHITECTURE behavior OF dispenser_test IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT cutter
+    COMPONENT dispenser
     PORT(
          land_state : INOUT  eight_three;
          rst : IN  std_logic;
-         cut_gnt : IN  std_logic_vector(7 downto 0);
+         dispense_gnt : IN  std_logic_vector(7 downto 0);
          clk : IN  std_logic;
-         cutting : OUT  std_logic_vector(7 downto 0)
+         dispensing : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
    signal rst : std_logic := '0';
-   signal cut_gnt : std_logic_vector(7 downto 0) := (others => '0');
+   signal dispense_gnt : std_logic_vector(7 downto 0) := (others => '0');
    signal clk : std_logic := '0';
 
 	--BiDirs
-   signal land_state : eight_three:= ("110","101","000","000","000","000","000","000");
+   signal land_state : eight_three:= ("011","011","000","000","000","000","000","000");
 
  	--Outputs
-   signal cutting : std_logic_vector(7 downto 0):="00000000";
+   signal dispensing : std_logic_vector(7 downto 0):="00000000";
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -68,20 +68,20 @@ ARCHITECTURE behavior OF cutter_test IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: cutter PORT MAP (
+   uut: dispenser PORT MAP (
           land_state => land_state,
           rst => rst,
-          cut_gnt => cut_gnt,
+          dispense_gnt => dispense_gnt,
           clk => clk,
-          cutting => cutting
+          dispensing => dispensing
         );
 
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '1';
-		wait for clk_period/2;
 		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
 		wait for clk_period/2;
    end process;
  
@@ -90,19 +90,21 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
+      wait for 100 ns;	
 
       wait for clk_period*10;
-			cut_gnt <= "00000001";
+			dispense_gnt <= "00000001";
 
 		wait for clk_period*10;
 			rst <='1';
 		wait for clk_period*10;
 			rst <='0';
 		wait for clk_period*10;
-			cut_gnt <= "00000000";
+			dispense_gnt <= "00000000";
       wait for clk_period*10;
-			cut_gnt <= "00000010";
-									
+			dispense_gnt <= "00000010";
+      wait for clk_period*10;
+			dispense_gnt <= "00000000";									
 
       -- insert stimulus here 
 

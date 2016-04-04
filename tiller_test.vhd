@@ -57,7 +57,7 @@ ARCHITECTURE behavior OF tiller_test IS
    signal clk : std_logic := '0';
 
 	--BiDirs
-   signal land_state : eight_three:= ("000","001","000","000","000","000","000","000");
+   signal land_state : eight_three:= ("000","010","000","000","000","000","000","000");
 
  	--Outputs
    signal tilling : std_logic_vector(7 downto 0):="00000000";
@@ -102,7 +102,8 @@ BEGIN
 			till_gnt <= "00000000";
       wait for clk_period*10;
 			till_gnt <= "00000010";
-									
+      wait for clk_period*10;
+			till_gnt <= "00000000";									
 
       -- insert stimulus here 
 

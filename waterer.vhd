@@ -48,8 +48,10 @@ end waterer;
 --7 cutting
 
 architecture Behavioral of waterer is
+signal water_gnt_prev : STD_LOGIC_VECTOR(7 downto 0):="00000000";
+signal prev_state : STD_LOGIC_VECTOR(2 downto 0):="000";
 begin
-	process(clk,water_gnt)
+	process(clk)
 	begin
 		if rising_edge(clk) then
 			if	rst='1' then
@@ -60,16 +62,20 @@ begin
 					if(water_gnt(i) = '1') then
 						if(land_state(i) = "011") then
 							land_state(i) <= "100";
+							prev_state <= "011";
 						elsif(land_state(i) = "101") then
-							land_state(i) <= "110";
-
+							land_state(i) <= "100";
+							prev_state <= "101";
 						else
+						end if;
+					else
+						if(water_gnt_prev(i) = '1') then
+							land_state(i) <= prev_state;
 						end if;
 					end if;
 				end loop;
 			end if;
-		else
-		
+			water_gnt_prev <= water_gnt;
 		end if;	
 	end process;
 end Behavioral;
