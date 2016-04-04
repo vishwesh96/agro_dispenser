@@ -20,3 +20,5 @@
 xst/
 _xmsgs/
 isim/
+ipcore_dir/
+iseconfig/
