@@ -1,0 +1,21 @@
+
+# Created by https://www.gitignore.io/api/xilinxise
+
+### XilinxISE ###
+# intermediate build files
+*.prj
+*_summary.html
+*_summary.xml
+*.exe
+*.wdb
+*.log
+*.cmd
+*.ini
+
+# project-wide generated files
+*.gise
+
+# generated folders
+xst/
+_xmsgs/
+isim/
