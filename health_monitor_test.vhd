@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   17:42:22 04/04/2016
+-- Create Date:   16:35:01 04/04/2016
 -- Design Name:   
--- Module Name:   /home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/tiller_test.vhd
+-- Module Name:   /home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/health_monitor_test.vhd
 -- Project Name:  Agro
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: tiller
+-- VHDL Test Bench Created by ISE for module: health_monitor
 -- 
 -- Dependencies:
 -- 
@@ -33,34 +33,32 @@ use work.types.all;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tiller_test IS
-END tiller_test;
+ENTITY health_monitor_test IS
+END health_monitor_test;
  
-ARCHITECTURE behavior OF tiller_test IS 
+ARCHITECTURE behavior OF health_monitor_test IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT tiller
+    COMPONENT health_monitor
     PORT(
-         land_state : INOUT  eight_three;
-         rst : IN  std_logic;
-         till_gnt : IN  std_logic_vector(7 downto 0);
          clk : IN  std_logic;
-         tilling : OUT  std_logic_vector(7 downto 0)
+         dead_probability : IN  std_logic;
+         land_state : IN  eight_three;
+         health_report : OUT  std_logic;
+         rst : IN  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal rst : std_logic := '0';
-   signal till_gnt : std_logic_vector(7 downto 0) := (others => '0');
    signal clk : std_logic := '0';
-
-	--BiDirs
-   signal land_state : eight_three:= ("000","001","000","000","000","000","000","000");
+   signal dead_probability : std_logic := '0';
+   signal land_state : eight_three := ("000","000","000","000","000","000","000","111");
+   signal rst : std_logic := '0';
 
  	--Outputs
-   signal tilling : std_logic_vector(7 downto 0):="00000000";
+   signal health_report : std_logic := '0';
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -68,20 +66,20 @@ ARCHITECTURE behavior OF tiller_test IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: tiller PORT MAP (
-          land_state => land_state,
-          rst => rst,
-          till_gnt => till_gnt,
+   uut: health_monitor PORT MAP (
           clk => clk,
-          tilling => tilling
+          dead_probability => dead_probability,
+          land_state => land_state,
+          health_report => health_report,
+          rst => rst
         );
 
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '0';
-		wait for clk_period/2;
 		clk <= '1';
+		wait for clk_period/2;
+		clk <= '0';
 		wait for clk_period/2;
    end process;
  
@@ -90,23 +88,17 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-
       wait for clk_period*10;
-			till_gnt <= "00000001";
-
-		wait for clk_period*10;
-			rst <='1';
-		wait for clk_period*10;
-			rst <='0';
-		wait for clk_period*10;
-			till_gnt <= "00000000";
+			rst<='1';
+		wait for clk_period*5;
+			rst<='0';
       wait for clk_period*10;
-			till_gnt <= "00000010";
-									
-
+			land_state(4)<="111";
+      wait for clk_period*10;
+			dead_probability <= '1';
+		wait for clk_period*10;
       -- insert stimulus here 
-
-      wait;
+		wait;
    end process;
 
 END;

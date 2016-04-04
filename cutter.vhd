@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    00:20:39 04/03/2016 
+-- Create Date:    23:29:06 04/02/2016 
 -- Design Name: 
--- Module Name:    cutter - Behavioral 
+-- Module Name:    waterer - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.types.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,17 +31,46 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity cutter is
-    Port ( rst : in  STD_LOGIC;
+    Port ( land_state : inout  eight_three:= ("110","101","000","000","000","000","000","000");
+           rst : in  STD_LOGIC;
+           cut_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
-           land_state : inout  eight_three;
-           cut_gnt : in  STD_LOGIC_VECTOR(7 downto 0);
-           cutting : out  STD_LOGIC_VECTOR(7 downto 0));
+           cutting : out  STD_LOGIC_VECtor(7 downto 0):="00000000");
 end cutter;
 
+--0 barren
+--1 1st tilling
+--2 2nd tilling
+--3 sowing
+--4 watering
+--5 seed sown
+--6 watering after sowing
+--7 cutting
+
 architecture Behavioral of cutter is
-
 begin
+	process(clk,cut_gnt)
+	begin
+		if rising_edge(clk) then
+			if	rst='1' then
+				cutting<="00000000";
+			else
+				cutting<=cut_gnt;				
+				for i in 0 to 7 loop
+					if(cut_gnt(i) = '1') then
+						if(land_state(i) = "110") then
+							land_state(i) <= "111";
+						elsif(land_state(i) = "101") then
+							land_state(i) <= "111";
 
-
+						else
+						end if;
+					end if;
+				end loop;
+			end if;
+		else
+		
+		end if;	
+	end process;
 end Behavioral;
 

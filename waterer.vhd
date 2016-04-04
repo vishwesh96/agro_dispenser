@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.types.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,11 +31,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity waterer is
-    Port ( land_state : inout  eight_three;
+    Port ( land_state : inout  eight_three:= ("011","101","000","000","000","000","000","000");
            rst : in  STD_LOGIC;
            water_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
-           watering : out  STD_LOGIC_VECtor(7 downto 0));
+           watering : out  STD_LOGIC_VECtor(7 downto 0):="00000000");
 end waterer;
 
 --0 barren
@@ -43,8 +44,8 @@ end waterer;
 --3 sowing
 --4 watering
 --5 seed sown
---6 cutting
---7 watering
+--6 watering after sowing
+--7 cutting
 
 architecture Behavioral of waterer is
 begin
@@ -54,8 +55,18 @@ begin
 			if	rst='1' then
 				watering<="00000000";
 			else
-				--land state
-				watering<=water_gnt;
+				watering<=water_gnt;				
+				for i in 0 to 7 loop
+					if(water_gnt(i) = '1') then
+						if(land_state(i) = "011") then
+							land_state(i) <= "100";
+						elsif(land_state(i) = "101") then
+							land_state(i) <= "110";
+
+						else
+						end if;
+					end if;
+				end loop;
 			end if;
 		else
 		

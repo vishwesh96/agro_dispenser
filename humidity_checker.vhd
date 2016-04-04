@@ -41,12 +41,12 @@ end humidity_checker;
 architecture Behavioral of humidity_checker is
 
 begin
-	process(clk,reset)
+	process(clk,rst)
 	begin
 		if(rising_edge(clk)) then
 			
 			-- No reset is needed since it is a combinational block
-			if(reset ='1') then
+			if(rst ='1') then
 				--for i in 0 to 7 loop
 					-- Reset => humidity value becomes upper thershold humidity.
 					--humidity(i)<= upper_humidity_thresholds(i);

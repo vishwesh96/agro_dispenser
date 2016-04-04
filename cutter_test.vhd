@@ -4,13 +4,13 @@
 --
 -- Create Date:   17:42:22 04/04/2016
 -- Design Name:   
--- Module Name:   /home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/tiller_test.vhd
+-- Module Name:   /home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/cutter_test.vhd
 -- Project Name:  Agro
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: tiller
+-- VHDL Test Bench Created by ISE for module: cutter
 -- 
 -- Dependencies:
 -- 
@@ -33,34 +33,34 @@ use work.types.all;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tiller_test IS
-END tiller_test;
+ENTITY cutter_test IS
+END cutter_test;
  
-ARCHITECTURE behavior OF tiller_test IS 
+ARCHITECTURE behavior OF cutter_test IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT tiller
+    COMPONENT cutter
     PORT(
          land_state : INOUT  eight_three;
          rst : IN  std_logic;
-         till_gnt : IN  std_logic_vector(7 downto 0);
+         cut_gnt : IN  std_logic_vector(7 downto 0);
          clk : IN  std_logic;
-         tilling : OUT  std_logic_vector(7 downto 0)
+         cutting : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
    signal rst : std_logic := '0';
-   signal till_gnt : std_logic_vector(7 downto 0) := (others => '0');
+   signal cut_gnt : std_logic_vector(7 downto 0) := (others => '0');
    signal clk : std_logic := '0';
 
 	--BiDirs
-   signal land_state : eight_three:= ("000","001","000","000","000","000","000","000");
+   signal land_state : eight_three:= ("110","101","000","000","000","000","000","000");
 
  	--Outputs
-   signal tilling : std_logic_vector(7 downto 0):="00000000";
+   signal cutting : std_logic_vector(7 downto 0):="00000000";
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -68,12 +68,12 @@ ARCHITECTURE behavior OF tiller_test IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: tiller PORT MAP (
+   uut: cutter PORT MAP (
           land_state => land_state,
           rst => rst,
-          till_gnt => till_gnt,
+          cut_gnt => cut_gnt,
           clk => clk,
-          tilling => tilling
+          cutting => cutting
         );
 
    -- Clock process definitions
@@ -92,16 +92,16 @@ BEGIN
       -- hold reset state for 100 ns.
 
       wait for clk_period*10;
-			till_gnt <= "00000001";
+			cut_gnt <= "00000001";
 
 		wait for clk_period*10;
 			rst <='1';
 		wait for clk_period*10;
 			rst <='0';
 		wait for clk_period*10;
-			till_gnt <= "00000000";
+			cut_gnt <= "00000000";
       wait for clk_period*10;
-			till_gnt <= "00000010";
+			cut_gnt <= "00000010";
 									
 
       -- insert stimulus here 

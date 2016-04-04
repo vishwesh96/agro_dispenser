@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    00:11:42 04/03/2016 
+-- Create Date:    23:29:06 04/02/2016 
 -- Design Name: 
 -- Module Name:    tiller - Behavioral 
 -- Project Name: 
@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.types.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,17 +31,46 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity tiller is
-    Port ( rst : in  STD_LOGIC;
+    Port ( land_state : inout  eight_three:= ("000","001","000","000","000","000","000","000");
+           rst : in  STD_LOGIC;
+           till_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
-           till_gnt : in  STD_LOGIC_VECTOR(7 downto 0);
-           land_state : inout  eight_three;
-           tilling : out  STD_LOGIC_VECTOR(7 downto 0));
+           tilling : out  STD_LOGIC_VECtor(7 downto 0):="00000000");
 end tiller;
 
+--0 barren
+--1 1st tilling
+--2 2nd tilling
+--3 sowing
+--4 watering
+--5 seed sown
+--6 watering after sowing
+--7 cutting
+
 architecture Behavioral of tiller is
-
 begin
-
-
+	process(clk,till_gnt)
+	begin
+		if rising_edge(clk) then
+			if	rst='1' then
+				tilling<="00000000";
+			else
+				tilling<=till_gnt;				
+				for i in 0 to 7 loop
+					if(till_gnt(i) = '1') then
+						if(land_state(i) = "000") then
+							land_state(i) <= "001";
+						end if;
+					else
+						if(land_state(i) = "001") then
+							land_state(i) <= "000";
+							end if;
+					end if;
+				end loop;
+			end if;
+		else
+		
+		end if;	
+	end process;
 end Behavioral;
 
