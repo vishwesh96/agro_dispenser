@@ -1,4 +1,0 @@
-vhdl isim_temp "ipcore_dir/fifo.vhd"
-vhdl isim_temp "types.vhd"
-vhdl isim_temp "tiller_queue.vhd"
-vhdl isim_temp "tiller_test.vhd"

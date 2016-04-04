@@ -59,8 +59,8 @@ ARCHITECTURE behavior OF land_monitor_test IS
    --Inputs
    signal rst : std_logic := '0';
    signal clk : std_logic := '0';
-   signal len : STD_LOGIC_VECTOR(7 downto 0) := (others =>'0');
-   signal breadth : std_logic_vector(7 downto 0) := (others => '0');
+   signal len : STD_LOGIC_VECTOR(7 downto 0) :="00001010";
+   signal breadth : std_logic_vector(7 downto 0) := "00000011";
    signal humidity_check : eight_eight:= (others => (others => '0'));
    signal duration : eight_ten := (others => (others => '0'));
 
@@ -96,9 +96,9 @@ BEGIN
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '0';
-		wait for clk_period/2;
 		clk <= '1';
+		wait for clk_period/2;
+		clk <= '0';
 		wait for clk_period/2;
    end process;
  
@@ -106,13 +106,19 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
+		for i in 0 to 7 loop
+			land_state(i)<="000";
+		end loop;
 		rst<='1';
-      wait for clk_period*2;
+      wait for clk_period*3;
 		rst<='0';
-		wait for clk_period*25;
---		land_state(0)<="011";
---		wait for clk_period*40;
---		land_state(0)<="010";
+		wait for clk_period*38;
+		land_state(0)<="101";
+		humidity_check(0)(0)<='1';
+		wait for clk_period*6;
+		humidity_check(0)(0)<='0';
+ 		wait for clk_period*38;
+		land_state(1)<="010";
       -- insert stimulus here 
 
       wait;
