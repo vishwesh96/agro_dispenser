@@ -63,7 +63,7 @@ END COMPONENT;
 	signal present : STD_LOGIC_VECTOR(7 downto 0):="00000000"; -- request present
 	signal pop : STD_LOGIC_VECTOR(7 downto 0):="00000000"; 	  -- popped request
 	signal read_counter : STD_LOGIC_VECTOR(2 downto 0):="000";
-	signal grant_counter : STD_LOGIC_VECTOR(2 downto 0):="000";
+--	signal grant_counter : STD_LOGIC_VECTOR(2 downto 0):="000";
 	signal rd_en_prev : STD_LOGIC:='0';
 begin
 fifo1 : fifo
@@ -92,14 +92,11 @@ process(clk)
 				start<='0';	
 				din<="00000000";
 				read_counter<="000";
-				grant_counter<="000";
+--				grant_counter<="000";
 				rd_en_prev<='1';
 			else
 				if(rd_en='0' and rd_en_prev ='1') then-- and grant_counter="010") then
 					water_gnt<=dout;
---					grant_counter<="000";
---				elsif not (grant_counter="010") then
---					grant_counter<= grant_counter+1;
 				end if;
 				
 				if rd_en='1' then 
@@ -143,7 +140,7 @@ process(clk)
 					wr_en<='1';
 				end if;
 				
-				if start = '1' then
+				if start = '1' then							--incremented every second
 					counter <=counter +'1';
 				end if;
 				if read_counter="010" then
@@ -155,7 +152,7 @@ process(clk)
 				end if;
 
 				for i in 0 to 7 loop
-					if(watering(i)='1' and counter=dts) then
+					if(watering(i)='1' and counter=dts) then			--for one day
 						water_gnt<="00000000";
 						start<='0';
 						counter<="0000000000000000000000";
