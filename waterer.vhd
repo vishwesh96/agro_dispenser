@@ -43,9 +43,8 @@ end waterer;
 --3 sowing
 --4 watering
 --5 seed sown
---6 cutting
---7 watering
-
+--6 watering after sowing
+--7 cutting
 architecture Behavioral of waterer is
 begin
 	process(clk,water_gnt)
