@@ -1,3 +1,0 @@
-vhdl isim_temp "types.vhd"
-vhdl isim_temp "humidity_checker.vhd"
-vhdl isim_temp "humidity_checker_test.vhd"

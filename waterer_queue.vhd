@@ -37,51 +37,7 @@ end waterer_queue;
 
 architecture Behavioral of waterer_queue is
 
-COMPONENT fifo
-  PORT (
-    clk : IN STD_LOGIC;
-    srst : IN STD_LOGIC;
-    din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-    wr_en : IN STD_LOGIC;
-    rd_en : IN STD_LOGIC;
-    dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-    full : OUT STD_LOGIC;
-    empty : OUT STD_LOGIC
-  );
-END COMPONENT;
-	signal  empty : STD_LOGIC:='0';
-	signal  full : STD_LOGIC:='0';
-	signal din : STD_LOGIC_VECTOR(7 downto 0):="00000000";
-	signal dout : STD_LOGIC_VECTOR(7 downto 0):="00000000";
-	signal rd_en : STD_LOGIC;
-	signal wr_en : STD_LOGIC;
-	signal start : STD_LOGIC:='0';
-	signal counter : STD_LOGIC_VECTOR(7 downto 0):="00000000";
-	signal top : STD_LOGIC_VECTOR(7 downto 0):="00000000"; -- requests present
-	signal pop : STD_LOGIC_VECTOR(7 downto 0):="00000000";
-	
- 	
 begin
-
-fifo1 : fifo
-
-PORT MAP(
-    clk => clk,
-    srst => rst,
-    din => din,
-    wr_en => wr_en,
-    rd_en => rd_en,
-    dout => dout,
-    full => full,
-    empty => empty
-);
-process
-	begin
-	if(rising_edge(clk) then
-		if(rst = '1') then
-			watering_gnt <= "00000000";
-		else
-			
 
 
 end Behavioral;
