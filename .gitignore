@@ -11,6 +11,7 @@
 *.log
 *.cmd
 *.ini
+*.xmsgs
 
 # project-wide generated files
 *.gise
