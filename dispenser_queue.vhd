@@ -19,6 +19,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.types.all;
+use std_logic_unsigned.org;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
