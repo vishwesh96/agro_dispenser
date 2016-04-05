@@ -40,7 +40,7 @@ entity land_monitor is
            breadth : in  STD_LOGIC_VECTOR(7 downto 0);
            land_state : in eight_three;
            barren_count : inout  eight_eight;
-           humidity_check : in  eight_eight;
+           humidity_check : in  eight_two;
 			  cutting_request : inout STD_LOGIC_VECTOR(7 downto 0);
            duration : in  eight_ten;
            area : out  eight_sixteen;
@@ -102,7 +102,7 @@ begin
 					end if;
 				end if;
 				
-				if land_state(i)="101" or land_state="011" then				--water request is high only when land 
+				if land_state(i)="101" or land_state(i)="011" then				--water request is high only when land 
 					if humidity_check(i)(0)='1' then		-- state is seeds sown or sowing  and and humidity(i)(0)
 						water_request(i)<='1';				-- is 1
 					else

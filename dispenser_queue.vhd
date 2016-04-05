@@ -19,10 +19,11 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use work.types.all;
+use ieee.std_logic_unsigned.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -30,16 +31,15 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity dispenser_queue is
-	Generic( mts : std_logic_vector(7 downto 0) :="0011111");
-    Port ( humidity_check : in  eight_eight;
+	Generic( mts : std_logic_vector(7 downto 0) :="00011111");
+    Port ( humidity_check : in  eight_two;
            rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
            speed_dispenser : in  STD_LOGIC_VECTOR(7 downto 0);			--in m/min
            dispensing : in  STD_LOGIC_VECTOR(7 downto 0);
            breadth : in  STD_LOGIC_VECTOR(7 downto 0);
 			  area : in eight_sixteen;
-           land_state : inout  eight_three;
-           water_request : out  STD_LOGIC_VECTOR(7 downto 0);
+           land_state : in  eight_three;
            dispense_gnt : out  STD_LOGIC_VECTOR(7 downto 0));
 end dispenser_queue;
 
@@ -69,7 +69,7 @@ END COMPONENT;
 	signal read_counter : STD_LOGIC_VECTOR(2 downto 0):="000";
 	signal rd_en_prev : STD_LOGIC:='0';
 	signal seconds_counter : STD_LOGIC_VECTOR(7 downto 0) :="00000000";
-	signal land_state_prev :STD_LOGIC_VECTOR(2 downto 0):="000";
+	signal land_state_prev : eight_three:=("000","000","000","000","000","000","000","000");
 begin
 
 fifo1 : fifo
@@ -100,7 +100,7 @@ process(clk)
 			read_counter<="000";
 			rd_en_prev<='1';
 			seconds_counter<="00000000";
-			
+			land_state_prev<=("000","000","000","000","000","000","000","000");
 		else
 			if(rd_en='0' and rd_en_prev ='1') then
 				dispense_gnt<=dout;
@@ -113,7 +113,7 @@ process(clk)
 			pop<= dout;
 			wr_en<='0';
 			
-			if ( land_state(0)="011" and land_state_prev ="010" and not(present(0)='1')) then
+			if ( land_state(0)="011" and land_state_prev(0) ="010" and not(present(0)='1')) then
 				din<="00000001";
 				present(0)<='1';
 				wr_en<='1';
