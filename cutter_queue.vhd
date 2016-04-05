@@ -19,7 +19,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use work.types.all;
+use ieee.std_logic_unsigned.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -88,7 +89,7 @@ process(clk)
 			cut_gnt<="00000000";
 			wr_en<='0';
 			rd_en<='0';
-			counter<="000000000000000000000000000000";
+			counter<="000000000000000000000000";
 			present<="00000000";
 			pop<="00000000";
 			start<='0';	
