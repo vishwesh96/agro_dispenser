@@ -28,6 +28,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 use work.types.all;
+use ieee.std_logic_unsigned.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
@@ -65,13 +66,21 @@ ARCHITECTURE behavior OF top_agro_test IS
 			
         );
     END COMPONENT;
-    
+
+
+	COMPONENT pseudo_random_signal_generator
+		PORT(
+			clk : in std_logic;
+			random_num : out std_logic 
+		);
+	END COMPONENT;    
 
    --Inputs
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
    signal humidity : eight_eight := (others => ("11110001"));
-   signal lower_humidity_thresholds : eight_eight :=( others=>("00000000"));
+   signal dead_humidity_thresholds : eight_eight :=( others=>("00000010"));	
+   signal lower_humidity_thresholds : eight_eight :=( others=>("00100000"));
    signal upper_humidity_thresholds : eight_eight := (others=>("11111111"));
    signal len : std_logic_vector(7 downto 0) := ("00001000");
    signal breadth : std_logic_vector(7 downto 0) := ("00001000");
@@ -91,7 +100,7 @@ ARCHITECTURE behavior OF top_agro_test IS
    signal dispensing : std_logic_vector(7 downto 0);
    signal watering : std_logic_vector(7 downto 0);
    signal cutting : std_logic_vector(7 downto 0);
-
+	signal random_num :std_logic;
  	--Outputs
    signal health_report : std_logic;
 
@@ -120,9 +129,16 @@ BEGIN
           dispensing => dispensing,
           watering => watering,
           cutting => cutting,
-          health_report => health_report
+          health_report => health_report,
+			 mts=>mts,
+			 dts=>dts
         );
-
+pseudo_random_signal_generator1 : pseudo_random_signal_generator
+	PORT MAP(
+		  clk=>clk,
+		  random_num=>random_num
+	);
+	
    -- Clock process definitions
    clk_process :process
    begin
@@ -157,10 +173,10 @@ process(clk)
 					humidity(i)<=humidity(i)-humidity_decrease_rate;					
 				end if;
 				if cutting(i)='1' then
-					if humidity(i) < dead_humdity_thresholds(i) then
+					if humidity(i) < dead_humidity_thresholds(i) then
 						dead_probability<='1';
 					else
-						--random
+						dead_probability<=random_num;
 					end if;
 				else 
 					dead_probability<='0';

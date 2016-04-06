@@ -37,6 +37,7 @@ entity top_agro is
 			  mts : in std_logic_vector(7 downto 0);
 			  dts : in std_logic_vector(21 downto 0);
            humidity : in  eight_eight;
+           dead_humidity_thresholds : in  eight_eight;			  
            lower_humidity_thresholds : in  eight_eight;
            upper_humidity_thresholds : in  eight_eight;
            len : in  STD_LOGIC_VECTOR(7 downto 0);
@@ -255,6 +256,7 @@ land_state_changer1 : land_state_changer
 		  watering=>watering,
 		  land_state=>land_state
 	);
+
 end Behavioral;
 
 

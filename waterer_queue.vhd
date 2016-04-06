@@ -107,7 +107,7 @@ process(clk)
 				pop<= dout;
 				wr_en<='0';
 				
-				if (water_request(0)='1' and not(present(0)='1')) then
+				if (water_request(0)='1' and not(present(0)='1') ) then
 					din<="00000001";
 					present(0)<='1';
 					wr_en<='1';

@@ -71,19 +71,14 @@ begin
 				end loop;
 				
 				for i in 0 to 7 loop
-					if(humidity(i) <  dead_humidity_thresholds(i) and (land_state(i) = "101" or land_state(i) = "110" or land_state(i) = "111")) then
+					if(humidity(i) <  dead_humidity_thresholds(i) and (land_state(i) = "101" or land_state(i) = "110" or land_state(i) = "111")) then   --- 111 not required
 						humidity_check(i)(2) <= '1';
 					else
-						humidity_check(i)(2) <= '0';
-					end if;
-					if(not (land_state(i) = "101" or land_state(i) = "110" or land_state(i) = "111")) then
 						humidity_check(i)(2) <= '0';
 					end if;
 				end loop;
 			end if;
 		end if;
  	end process;
-	
-
 end Behavioral;
 
