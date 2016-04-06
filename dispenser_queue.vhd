@@ -32,8 +32,9 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity dispenser_queue is
-	Generic( mts : std_logic_vector(7 downto 0) :="00011111");
-    Port ( humidity_check : in  eight_two;
+    Port ( 
+			  mts : in STD_LOGIC_VECTOR(7 downto 0);
+			  humidity_check : in  eight_two;
            rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
            speed_dispenser : in  STD_LOGIC_VECTOR(7 downto 0);			--in m/min
@@ -186,7 +187,8 @@ process(clk)
 			elsif not (read_counter="100") then
 				read_counter<=read_counter+1;
 			end if;
-			rd_en_prev<=rd_en;	
+			rd_en_prev<=rd_en;
+			land_state_prev <= land_state;
 		end if;
 	end if;
 

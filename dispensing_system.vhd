@@ -32,11 +32,12 @@ use work.types.all;
 entity dispensing_system is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
+			  mts : in STD_LOGIC_VECTOR(7 downto 0);
            humidity_check : in  eight_two;
            speed_dispenser : in  STD_LOGIC_VECtor(7 downto 0);
            breadth : in  STD_LOGIC_VECtor(7 downto 0);
            area : in  eight_sixteen;
-           land_state : inout  eight_three;
+			  land_state : in eight_three;
            dispensing : inout  STD_LOGIC_VECtor(7 downto 0));
 end dispensing_system;
 
@@ -44,7 +45,6 @@ architecture Behavioral of dispensing_system is
 
 COMPONENT dispenser
 	PORT(
-			land_state : inout  eight_three;
          rst : in  STD_LOGIC;
          dispense_gnt : in  STD_LOGIC_VECtor(7 downto 0);
          clk : in  STD_LOGIC;
@@ -53,15 +53,15 @@ COMPONENT dispenser
 END COMPONENT;
 
 COMPONENT dispenser_queue
-	PORT(
+	PORT( mts : in STD_LOGIC_VECTOR(7 downto 0);
 			humidity_check : in  eight_two;
 		  rst : in  STD_LOGIC;
 		  clk : in  STD_LOGIC;
+		  land_state : in eight_three;
 		  speed_dispenser : in  STD_LOGIC_VECTOR(7 downto 0);			--in m/min
 		  dispensing : in  STD_LOGIC_VECTOR(7 downto 0);
 		  breadth : in  STD_LOGIC_VECTOR(7 downto 0);
 		  area : in eight_sixteen;
-		  land_state : in  eight_three;
 		  dispense_gnt : out  STD_LOGIC_VECTOR(7 downto 0)
 	);
 END COMPONENT;
@@ -76,7 +76,6 @@ dispenser1 :dispenser
 	PORT MAP(
 	clk=>clk,
 	rst=>rst,
-	land_state=>land_state,
 	dispense_gnt=>dispense_gnt,
 	dispensing=>dispensing
 	);
@@ -87,11 +86,12 @@ dispenser_queue1 :dispenser_queue
 		  humidity_check=>humidity_check,
 		  rst=>rst,
 		  clk=>clk,
+		  land_state=>land_state,
+		  mts=>mts,
 		  speed_dispenser=>speed_dispenser,		--in m/min
 		  dispensing=>dispensing, 
 		  breadth=>breadth,
 		  area=>area,
-		  land_state=>land_state,
 		  dispense_gnt=>dispense_gnt
 	);
 

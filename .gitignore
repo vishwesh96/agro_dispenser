@@ -4,12 +4,20 @@
 ### XilinxISE ###
 # intermediate build files
 *.prj
-*_summary.html
-*_summary.xml
+*.html
+*.xml
 *.exe
 *.wdb
 *.log
 *.cmd
+*.cmd_log
+*.syr
+*.lso
+*.xst
+*.stx
+*.xrpt
+*.sym
+*.spl
 *.ini
 *.xmsgs
 

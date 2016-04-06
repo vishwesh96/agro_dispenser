@@ -48,14 +48,12 @@ end dispenser;
 --7 cutting
 
 architecture Behavioral of dispenser is
-signal dispense_gnt_prev : STD_LOGIC_VECTOR(7 downto 0):="00000000";
 begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
 			if	rst='1' then
 				dispensing<="00000000";
-				land_state<=("000","000","000","000","000","000","000","000");				
 			else
 				dispensing<=dispense_gnt;				
 			end if;

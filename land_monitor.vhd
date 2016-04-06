@@ -33,9 +33,9 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity land_monitor is
-	Generic( dts : std_logic_vector(21 downto 0) :="0000000000000000011111");
     Port ( rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
+			  dts : std_logic_vector(21 downto 0);		  
            len : in  STD_LOGIC_VECTOR(7 downto 0);
            breadth : in  STD_LOGIC_VECTOR(7 downto 0);
            land_state : in eight_three;

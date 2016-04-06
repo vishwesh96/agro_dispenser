@@ -33,7 +33,6 @@ use ieee.std_logic_unsigned.all;
 entity watering_system is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
-           land_state : inout  eight_three;
            watering : inout  STD_LOGIC_VECtor(7 downto 0);
 			  water_request : in STD_LOGIC_VECtor(7 downto 0));
 end watering_system;
@@ -41,7 +40,6 @@ end watering_system;
 architecture Behavioral of watering_system is
 COMPONENT waterer
 	PORT(
-			  land_state : inout  eight_three;
            rst : in  STD_LOGIC;
            water_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
@@ -66,7 +64,6 @@ begin
 waterer1 :waterer
 
 	PORT MAP(
-	  land_state=>land_state,
 	  rst=>rst,
 	  water_gnt=>water_gnt,
 	  clk=>clk,

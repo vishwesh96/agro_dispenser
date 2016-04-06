@@ -32,7 +32,6 @@ use ieee.std_logic_unsigned.all;
 entity tilling_system is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
-           land_state : inout  eight_three;
            tilling : inout  STD_LOGIC_VECtor(7 downto 0);
 			  barren_count : in eight_eight;
 			  speed_tiller : in STD_LOGIC_VECtor(7 downto 0);
@@ -42,7 +41,6 @@ end tilling_system;
 architecture Behavioral of tilling_system is
 COMPONENT tiller
 	PORT(
-		  land_state : inout  eight_three;
 		  rst : in  STD_LOGIC;
 		  till_gnt : in  STD_LOGIC_VECtor(7 downto 0);
 		  clk : in  STD_LOGIC;
@@ -69,7 +67,6 @@ begin
 tiller1 :tiller
 
 	PORT MAP(
-	  land_state=>land_state,
 	  rst=>rst,
 	  till_gnt=>till_gnt,
 	  clk=>clk,
