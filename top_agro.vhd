@@ -31,6 +31,9 @@ use ieee.std_logic_unsigned.all;
 --use UNISIM.VComponents.all;
 
 entity top_agro is
+	Generic( mts : std_logic_vector(7 downto 0) :="00000111";
+				dts : std_logic_vector(21 downto 0) :="0000000000000000011111"
+			);
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
            humidity : in  eight_eight;
@@ -71,6 +74,7 @@ COMPONENT land_monitor
 		  len : in  STD_LOGIC_VECTOR(7 downto 0);
 		  breadth : in  STD_LOGIC_VECTOR(7 downto 0);
 		  land_state : in eight_three;
+		  dts : in std_logic_vector(21 downto 0);
 		  barren_count : inout  eight_eight;
 		  humidity_check : in  eight_two;
 		  cutting_request : inout STD_LOGIC_VECTOR(7 downto 0);
@@ -94,7 +98,6 @@ COMPONENT tilling_system
 	PORT(
 		clk : in  STD_LOGIC;
 		  rst : in  STD_LOGIC;
-		  land_state : inout  eight_three;
 		  tilling : inout  STD_LOGIC_VECtor(7 downto 0);
 		  barren_count : in eight_eight;
 		  speed_tiller : in STD_LOGIC_VECtor(7 downto 0);
@@ -106,11 +109,12 @@ COMPONENT dispensing_system
 	PORT(
 		clk : in  STD_LOGIC;
 		  rst : in  STD_LOGIC;
+		  land_state : in eight_three;
+		  mts : in std_logic_vector(7 downto 0);
 		  humidity_check : in  eight_two;
 		  speed_dispenser : in  STD_LOGIC_VECtor(7 downto 0);
 		  breadth : in  STD_LOGIC_VECtor(7 downto 0);
 		  area : in  eight_sixteen;
-		  land_state : inout  eight_three;
 		  dispensing : inout  STD_LOGIC_VECtor(7 downto 0)
 	);
 END COMPONENT;
@@ -119,7 +123,6 @@ COMPONENT watering_system
 	PORT(
 		clk : in  STD_LOGIC;
 		  rst : in  STD_LOGIC;
-		  land_state : inout  eight_three;
 		  watering : inout  STD_LOGIC_VECtor(7 downto 0);
 		  water_request : in STD_LOGIC_VECtor(7 downto 0)
 	);
@@ -129,7 +132,6 @@ COMPONENT cutting_system
 	PORT(
 		clk : in  STD_LOGIC;
 		  rst : in  STD_LOGIC;
-		  land_state : inout  eight_three;
 		  cutting : inout  STD_LOGIC_VECtor(7 downto 0);
 		  speed_cutter : in STD_LOGIC_VECtor(7 downto 0);
 		  area : in  eight_sixteen;
@@ -139,6 +141,17 @@ COMPONENT cutting_system
 END COMPONENT;
 
 
+COMPONENT land_state_changer
+	PORT(
+		  clk : in std_logic;
+		  rst : in std_logic;
+		  tilling : in  STD_LOGIC_vector(7 downto 0);
+		  cutting : in  STD_LOGIC_vector(7 downto 0);
+		  dispensing : in  STD_LOGIC_vector(7 downto 0);
+		  watering : in  STD_LOGIC_vector(7 downto 0);
+		  land_state : inout  eight_three
+	);
+END COMPONENT;
 
 --signals
 	signal humidity_check : eight_two;
@@ -167,6 +180,7 @@ land_monitor1 : land_monitor
 		  clk=>clk,
 		  len=>len,
 		  breadth=>breadth,
+		  dts=>dts,
 		  land_state=>land_state,
 		  barren_count=>barren_count,
 		  humidity_check=>humidity_check,
@@ -189,7 +203,6 @@ tilling_system1 : tilling_system
 	PORT MAP(
 		 clk=>clk,
 		  rst=>rst, 
-		  land_state=>land_state, 
 		  tilling=>tilling,
 		  barren_count=>barren_count,
 		  speed_tiller=>speed_tiller,
@@ -200,11 +213,12 @@ dispensing_system1 : dispensing_system
 	PORT MAP(
 		  clk=>clk,
 		  rst=>rst,
+		  mts=>mts,
+		  land_state=>land_state,
 		  humidity_check=>humidity_check,
 		  speed_dispenser=>speed_dispenser, 
 		  breadth=>breadth,
 		  area=>area,
-		  land_state=>land_state, 
 		  dispensing=>dispensing
 	);
 
@@ -212,7 +226,6 @@ watering_system1 : watering_system
 	PORT MAP(
 		  clk=>clk,
 		  rst=>rst,
-		  land_state=>land_state,
 		  watering=>watering,
 		  water_request=>water_request
 	);
@@ -221,7 +234,6 @@ cutting_system1 : cutting_system
 	PORT MAP(
 		  clk=>clk,
 		  rst=>rst,
-		  land_state=>land_state,
 		  cutting=>cutting,
 		  speed_cutter=>speed_cutter,
 		  area=>area,
@@ -229,6 +241,16 @@ cutting_system1 : cutting_system
 		  cutting_request=>cutting_request
 	);
 
+land_state_changer1 : land_state_changer 
+	PORT MAP(
+		  clk=>clk,
+		  rst=>rst,
+		  tilling=>tilling,
+		  cutting=>cutting,
+		  dispensing=>dispensing, 
+		  watering=>watering,
+		  land_state=>land_state
+	);
 end Behavioral;
 
 

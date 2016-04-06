@@ -31,7 +31,9 @@ use work.types.all;
 --use UNISIM.VComponents.all;
 
 entity land_state_changer is
-    Port ( tilling : in  STD_LOGIC_vector(7 downto 0);
+    Port (  clk : in std_logic;
+				rst : in std_logic;
+				tilling : in  STD_LOGIC_vector(7 downto 0);
            cutting : in  STD_LOGIC_vector(7 downto 0);
            dispensing : in  STD_LOGIC_vector(7 downto 0);
            watering : in  STD_LOGIC_vector(7 downto 0);

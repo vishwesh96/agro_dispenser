@@ -54,7 +54,6 @@ begin
 		if rising_edge(clk) then
 			if	rst='1' then
 				tilling<="00000000";
-				till_gnt_prev<="00000000";
 			else
 				tilling<=till_gnt;				
 			end if;

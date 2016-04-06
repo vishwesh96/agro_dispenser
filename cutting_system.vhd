@@ -34,7 +34,6 @@ use ieee.std_logic_unsigned.all;
 entity cutting_system is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
-           land_state : inout  eight_three;
            cutting : inout  STD_LOGIC_VECtor(7 downto 0);
 			  speed_cutter : in STD_LOGIC_VECtor(7 downto 0);
            area : in  eight_sixteen;
@@ -46,7 +45,6 @@ architecture Behavioral of cutting_system is
 
 COMPONENT cutter
 	PORT(
-			  land_state : inout  eight_three;
            rst : in  STD_LOGIC;
            cut_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
@@ -74,7 +72,6 @@ begin
 cutter1 :cutter
 
 	PORT MAP(
-	  land_state=>land_state,
 	  rst=>rst,
 	  cut_gnt=>cut_gnt,
 	  clk=>clk,

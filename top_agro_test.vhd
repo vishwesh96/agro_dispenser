@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   00:08:01 04/06/2016
+-- Create Date:   11:28:28 04/06/2016
 -- Design Name:   
 -- Module Name:   /home/vishwesh/Desktop/Desktop/CS 254 Lab/Agro/top_agro_test.vhd
 -- Project Name:  Agro
@@ -28,7 +28,6 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 use work.types.all;
-use ieee.std_logic_unsigned.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
@@ -45,8 +44,8 @@ ARCHITECTURE behavior OF top_agro_test IS
          clk : IN  std_logic;
          rst : IN  std_logic;
          humidity : IN  eight_eight;
-         lower_humidity_thresholds : IN  eight_eight;
-         upper_humidity_thresholds : IN  eight_eight;
+         lower_humidity_thresholds : eight_eight;
+         upper_humidity_thresholds : eight_eight;
          len : IN  std_logic_vector(7 downto 0);
          breadth : IN  std_logic_vector(7 downto 0);
          duration : IN  eight_ten;
@@ -67,16 +66,16 @@ ARCHITECTURE behavior OF top_agro_test IS
    --Inputs
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
-   signal humidity : eight_eight := (others =>(others => '0'));
-   signal lower_humidity_thresholds : eight_eight := (others =>(others => '0'));
-   signal upper_humidity_thresholds : eight_eight := (others =>(others => '0'));
-   signal len : std_logic_vector(7 downto 0) :="00011111";
-   signal breadth : std_logic_vector(7 downto 0) :="00001111";
-   signal duration : eight_ten  :=(others =>(others => '0'));
+   signal humidity : eight_eight := (others => (others => '0'));
+   signal lower_humidity_thresholds : eight_eight :=( others=>(others => '0'));
+   signal upper_humidity_thresholds : eight_eight := (others=>(others => '0'));
+   signal len : std_logic_vector(7 downto 0) := (others => '0');
+   signal breadth : std_logic_vector(7 downto 0) := (others => '0');
+   signal duration : eight_ten := (others=>(others => '0'));
    signal speed_dispenser : std_logic_vector(7 downto 0) := (others => '0');
-   signal speed_tiller : std_logic_vector(7 downto 0) := "00000111";
+   signal speed_tiller : std_logic_vector(7 downto 0) := (others => '0');
    signal speed_cutter : std_logic_vector(7 downto 0) := (others => '0');
-   signal crop_count : eight_eight:=(others => (others => '0'));
+   signal crop_count : eight_eight :=(others => (others => '0'));
    signal dead_probability : std_logic := '0';
 
 	--BiDirs
@@ -118,9 +117,9 @@ BEGIN
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '1';
-		wait for clk_period/2;
 		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
 		wait for clk_period/2;
    end process;
  
@@ -129,7 +128,7 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      wait for 100 ns;	
+      wait for 40 ns;	
 		rst<='1';
       wait for clk_period*2;
 		rst<='0';
