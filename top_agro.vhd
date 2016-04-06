@@ -62,7 +62,7 @@ COMPONENT humidity_checker
 		  humidity : in  eight_eight;
 		  lower_humidity_thresholds : in eight_eight;
 		  upper_humidity_thresholds : in eight_eight;
-		  humidity_check : out eight_two;
+		  humidity_check : out eight_three;
 		  clk : in  STD_LOGIC	
 	);
 END COMPONENT;
@@ -76,7 +76,7 @@ COMPONENT land_monitor
 		  land_state : in eight_three;
 		  dts : in std_logic_vector(21 downto 0);
 		  barren_count : inout  eight_eight;
-		  humidity_check : in  eight_two;
+		  humidity_check : in  eight_three;
 		  cutting_request : inout STD_LOGIC_VECTOR(7 downto 0);
 		  duration : in  eight_ten;
 		  area : out  eight_sixteen;
@@ -112,7 +112,7 @@ COMPONENT dispensing_system
 		  rst : in  STD_LOGIC;
 		  land_state : in eight_three;
 		  mts : in std_logic_vector(7 downto 0);
-		  humidity_check : in  eight_two;
+		  humidity_check : in  eight_three;
 		  speed_dispenser : in  STD_LOGIC_VECtor(7 downto 0);
 		  breadth : in  STD_LOGIC_VECtor(7 downto 0);
 		  area : in  eight_sixteen;
@@ -156,7 +156,7 @@ COMPONENT land_state_changer
 END COMPONENT;
 
 --signals
-	signal humidity_check : eight_two;
+	signal humidity_check : eight_three;
 	signal land_state : eight_three;
 	signal barren_count : eight_eight;
 	signal cutting_request : STD_LOGIC_VECTOR(7 downto 0);
