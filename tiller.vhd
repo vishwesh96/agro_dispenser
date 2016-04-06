@@ -31,7 +31,7 @@ use work.types.all;
 --use UNISIM.VComponents.all;
 
 entity tiller is
-    Port ( land_state : inout  eight_three:= ("000","010","000","000","000","000","000","000");
+    Port ( 
            rst : in  STD_LOGIC;
            till_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
@@ -48,32 +48,16 @@ end tiller;
 --7 cutting
 
 architecture Behavioral of tiller is
-signal till_gnt_prev : STD_LOGIC_VECTOR(7 downto 0):="00000000";
 begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
 			if	rst='1' then
 				tilling<="00000000";
+				till_gnt_prev<="00000000";
 			else
 				tilling<=till_gnt;				
-				for i in 0 to 7 loop
-					if(till_gnt(i) = '1') then
-						if(land_state(i) = "000") then
-							land_state(i) <= "001";
-						end if;
-					else
-						if(till_gnt_prev(i) = '1') then
-							if(land_state(i) <= "001") then
-								land_state(i) <= "010";
-							elsif(land_state(i) <= "010") then
-								land_state(i) <= "011";
-							end if;
-						end if;
-					end if;
-				end loop;
 			end if;
-			till_gnt_prev <= till_gnt;
 		end if;	
 	end process;
 end Behavioral;

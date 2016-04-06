@@ -70,11 +70,11 @@ ARCHITECTURE behavior OF top_agro_test IS
    signal humidity : eight_eight := (others =>(others => '0'));
    signal lower_humidity_thresholds : eight_eight := (others =>(others => '0'));
    signal upper_humidity_thresholds : eight_eight := (others =>(others => '0'));
-   signal len : std_logic_vector(7 downto 0) := (others => '0');
-   signal breadth : std_logic_vector(7 downto 0) := (others => '0');
+   signal len : std_logic_vector(7 downto 0) :="00011111";
+   signal breadth : std_logic_vector(7 downto 0) :="00001111";
    signal duration : eight_ten  :=(others =>(others => '0'));
    signal speed_dispenser : std_logic_vector(7 downto 0) := (others => '0');
-   signal speed_tiller : std_logic_vector(7 downto 0) := (others => '0');
+   signal speed_tiller : std_logic_vector(7 downto 0) := "00000111";
    signal speed_cutter : std_logic_vector(7 downto 0) := (others => '0');
    signal crop_count : eight_eight:=(others => (others => '0'));
    signal dead_probability : std_logic := '0';

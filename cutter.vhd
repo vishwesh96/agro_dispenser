@@ -31,7 +31,7 @@ use work.types.all;
 --use UNISIM.VComponents.all;
 
 entity cutter is
-    Port ( land_state : inout  eight_three:= ("110","101","000","000","000","000","000","000");
+    Port ( 
            rst : in  STD_LOGIC;
            cut_gnt : in  STD_LOGIC_VECtor(7 downto 0);
            clk : in  STD_LOGIC;
@@ -48,7 +48,6 @@ end cutter;
 --7 cutting
 
 architecture Behavioral of cutter is
-signal cut_gnt_prev : STD_LOGIC_VECTOR(7 downto 0):="00000000";
 begin
 	process(clk,cut_gnt)
 	begin
@@ -57,23 +56,7 @@ begin
 				cutting<="00000000";
 			else
 				cutting<=cut_gnt;				
-				for i in 0 to 7 loop
-					if(cut_gnt(i) = '1') then
-						if(land_state(i) = "110") then
-							land_state(i) <= "111";
-						elsif(land_state(i) = "101") then
-							land_state(i) <= "111";
-						else
-						end if;
-					else
-						if(cut_gnt_prev(i) = '1') then
-							land_state(i) <= "000";
-						end if;
-					end if;
-				end loop;
 			end if;
-		else
-		cut_gnt_prev <= cut_gnt;
 		end if;	
 	end process;
 end Behavioral;
