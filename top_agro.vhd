@@ -61,8 +61,10 @@ COMPONENT humidity_checker
 	PORT(
 		  rst : in  STD_LOGIC;
 		  humidity : in  eight_eight;
+		  dead_humidity_thresholds : in eight_eight;
 		  lower_humidity_thresholds : in eight_eight;
 		  upper_humidity_thresholds : in eight_eight;
+		  land_state : in eight_three ;
 		  humidity_check : out eight_three;
 		  clk : in  STD_LOGIC	
 	);
@@ -127,6 +129,7 @@ COMPONENT watering_system
 		  rst : in  STD_LOGIC;
 		  dts: std_logic_vector(21 downto 0);
 		  watering : inout  STD_LOGIC_VECtor(7 downto 0);
+		  humidity_check : in eight_three;
 		  water_request : in STD_LOGIC_VECtor(7 downto 0)
 	);
 END COMPONENT;
@@ -171,8 +174,10 @@ humidity_checker1 : humidity_checker
 	PORT MAP(
 		  rst=>rst,
 		  humidity=>humidity,
+		  dead_humidity_thresholds=>dead_humidity_thresholds,
 		  lower_humidity_thresholds=>lower_humidity_thresholds,
 		  upper_humidity_thresholds=>upper_humidity_thresholds,
+		  land_state=>land_state,
 		  humidity_check=>humidity_check,
 		  clk=>clk
 	);
@@ -231,6 +236,7 @@ watering_system1 : watering_system
 		  clk=>clk,
 		  rst=>rst,
 		  dts=>dts,
+		  humidity_check=>humidity_check,
 		  watering=>watering,
 		  water_request=>water_request
 	);

@@ -35,6 +35,7 @@ entity watering_system is
            rst : in  STD_LOGIC;
 			  dts : in  std_logic_vector(21 downto 0) :="0000000000000000011111";
            watering : inout  STD_LOGIC_VECtor(7 downto 0);
+			  humidity_check : in eight_three;
 			  water_request : in STD_LOGIC_VECtor(7 downto 0));
 end watering_system;
 
@@ -52,6 +53,7 @@ COMPONENT waterer_queue
 	PORT(
 			 clk : in STD_LOGIC;
 			  rst : in STD_LOGIC;
+			  humidity_check: in eight_three;
 			  dts :  std_logic_vector(21 downto 0);
 			  watering : in  STD_LOGIC_VECTOR(7 downto 0);
            water_request : in  STD_LOGIC_VECTOR(7 downto 0);
@@ -79,6 +81,7 @@ waterer_queue1 :waterer_queue
 			  rst=>rst,
 			  watering=>watering, 
 			  dts=>dts,
+			  humidity_check=>humidity_check,
            water_request=>water_request, 
            water_gnt=>water_gnt
 	);

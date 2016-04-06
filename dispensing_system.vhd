@@ -33,7 +33,7 @@ entity dispensing_system is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
 			  mts : in STD_LOGIC_VECTOR(7 downto 0);
-           humidity_check : in  eight_two;
+           humidity_check : in  eight_three;
            speed_dispenser : in  STD_LOGIC_VECtor(7 downto 0);
            breadth : in  STD_LOGIC_VECtor(7 downto 0);
            area : in  eight_sixteen;
@@ -54,7 +54,7 @@ END COMPONENT;
 
 COMPONENT dispenser_queue
 	PORT( mts : in STD_LOGIC_VECTOR(7 downto 0);
-			humidity_check : in  eight_two;
+		  humidity_check : in  eight_three;
 		  rst : in  STD_LOGIC;
 		  clk : in  STD_LOGIC;
 		  land_state : in eight_three;

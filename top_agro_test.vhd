@@ -90,8 +90,8 @@ ARCHITECTURE behavior OF top_agro_test IS
    signal speed_cutter : std_logic_vector(7 downto 0) := ("00000010");
    signal crop_count : eight_eight :=(others => ("00001000"));
    signal dead_probability : std_logic := '0';
-	signal humidity_decrease_rate : std_logic_vector(7 downto 0) :="00000001";  --rate of decrease of humidity if not watered
-	signal humidity_increase_rate : std_logic_vector(7 downto 0) :="00000001";  --rate of increase of humidity if not watered	
+	signal humidity_decrease_rate : std_logic_vector(15 downto 0) :="00000001";  --number of clock cycles after which humidity increases by 1 
+	signal humidity_increase_rate : std_logic_vector(15 downto 0) :="00000001";  --number of clock cycles after which humidity decreases by 1 
 	signal mts : std_logic_vector(7 downto 0) :="00000111";
 	signal dts : std_logic_vector(21 downto 0) :="0000000000000000011111";
 	
@@ -104,7 +104,11 @@ ARCHITECTURE behavior OF top_agro_test IS
  	--Outputs
    signal health_report : std_logic;
 
-   -- Clock period definitions
+	--counters
+	signal humidity_increase_counter : std_logic_vector(15 downto 0);
+   signal humidity_decrease_counter : std_logic_vector(15 downto 0);
+	
+	-- Clock period definitions
    constant clk_period : time := 10 ns;
  
 BEGIN
@@ -166,24 +170,45 @@ pseudo_random_signal_generator1 : pseudo_random_signal_generator
 	
 process(clk)
 	begin
-			for i in 0 to 7 loop				
-				if (watering(i)='1') then
-					humidity(i)<=humidity(i)+humidity_increase_rate-humidity_decrease_rate;
+		if rising_edge(clk)then
+			if rst='1' then
+				humdity_increase_counter<="0000000000000000";
+				humdity_decrease_counter<="0000000000000000";
+			else
+				if humdity_increase_counter = humidity_increase_rate then
+					for i in 0 to 7 loop		
+						if (watering(i)='1')then
+							humidity(i)<=humidity(i)+1;
+						end if;
+					end loop;
+					humdity_increase_counter<="0000000000000000";
 				else
-					humidity(i)<=humidity(i)-humidity_decrease_rate;					
+					humdity_increase_counter<=humdity_increase_counter+1;
 				end if;
-				if cutting(i)='1' then
-					if humidity(i) < dead_humidity_thresholds(i) then
-						dead_probability<='1';
-					else
-						dead_probability<=random_num;
+				
+				if humdity_decrease_counter = humidity_decrease_rate then
+					for i in 0 to 7 loop
+						if watering(i)='0' and not(humidity="00000000")then
+							humidity(i)<=humidity(i)-1;							
+						end if;
+					end loop;
+				else
+					humdity_decrease_counter<=humdity_decrease_counter+1;
+				end if;
+					
+				for i in 0 to 7 loop	
+					if cutting(i)='1' then
+						if humidity(i) < dead_humidity_thresholds(i) then
+							dead_probability<='1';
+						else
+							dead_probability<=random_num;
+						end if;
+					else 
+						dead_probability<='0';
 					end if;
-				else 
-					dead_probability<='0';
-				end if;
-			end loop;
-			
-						
+				end loop;
+			end if;
+		end if;
 	end process;
 
 END;

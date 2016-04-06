@@ -34,7 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity dispenser_queue is
     Port ( 
 			  mts : in STD_LOGIC_VECTOR(7 downto 0);
-			  humidity_check : in  eight_two;
+			  humidity_check : in  eight_three;
            rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
            speed_dispenser : in  STD_LOGIC_VECTOR(7 downto 0);			--in m/min
