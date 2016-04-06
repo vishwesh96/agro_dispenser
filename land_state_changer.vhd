@@ -32,6 +32,8 @@ use work.types.all;
 
 entity land_state_changer is
     Port ( tilling : in  STD_LOGIC_vector(7 downto 0);
+			  clk : in  STD_LOGIC;
+			  rst : in  STD_LOGIC;
            cutting : in  STD_LOGIC_vector(7 downto 0);
            dispensing : in  STD_LOGIC_vector(7 downto 0);
            watering : in  STD_LOGIC_vector(7 downto 0);
@@ -49,6 +51,13 @@ begin
 process(clk)
 begin
 if(rising_edge(clk)) then
+	if(rst= '1') then
+		land_state <= ("000","000","000","000","000","000","000","000");
+		tilling_prev <= "00000000";
+		watering_prev <= "00000000"; 
+		cutting_prev <= "00000000";
+		dispensing_prev <= "00000000";
+	else
 			for i in 0 to 7 loop
 					if(watering(i) = '1') then
 						if(land_state(i) = "011") then
@@ -94,11 +103,12 @@ if(rising_edge(clk)) then
 						end if;
 					end if;
 			end loop;
-	cutting_prev <= cutting;
-	tilling_prev <= tilling;
-	dispensing_prev <= dispensing;
-	watering_prev <= watering;
-end if;
+			cutting_prev <= cutting;
+			tilling_prev <= tilling;
+			dispensing_prev <= dispensing;
+			watering_prev <= watering;
+		end if;
+	end if;
 end process;
 
 end Behavioral;
