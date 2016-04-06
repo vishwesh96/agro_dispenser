@@ -35,12 +35,12 @@ use IEEE.NUMERIC_STD.ALL;
 entity land_monitor is
     Port ( rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
-			  dts : std_logic_vector(21 downto 0);		  
+			  dts : in std_logic_vector(21 downto 0);		  
            len : in  STD_LOGIC_VECTOR(7 downto 0);
            breadth : in  STD_LOGIC_VECTOR(7 downto 0);
            land_state : in eight_three;
            barren_count : inout  eight_eight;
-           humidity_check : in  eight_two;
+           humidity_check : in  eight_three;
 			  cutting_request : inout STD_LOGIC_VECTOR(7 downto 0);
            duration : in  eight_ten;
            area : out  eight_sixteen;

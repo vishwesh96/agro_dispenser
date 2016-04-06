@@ -31,10 +31,12 @@ use work.types.all;
 
 entity humidity_checker is
     Port ( rst : in  STD_LOGIC;
+			  land_state : in eight_three;
 			  humidity : in  eight_eight;
 			  lower_humidity_thresholds : in eight_eight;
 			  upper_humidity_thresholds : in eight_eight;
-			  humidity_check : out eight_two;
+			  dead_humidity_thresholds : in eight_eight;
+			  humidity_check : out eight_three;
            clk : in  STD_LOGIC);
 end humidity_checker;
 
@@ -65,6 +67,17 @@ begin
 						humidity_check(i)(1) <= '1';
 					else
 						humidity_check(i)(1) <= '0';
+					end if;
+				end loop;
+				
+				for i in 0 to 7 loop
+					if(humidity(i) <  dead_humidity_thresholds(i) and (land_state(i) = "101" or land_state(i) = "110" or land_state(i) = "111")) then
+						humidity_check(i)(2) <= '1';
+					else
+						humidity_check(i)(2) <= '0';
+					end if;
+					if(not (land_state(i) = "101" or land_state(i) = "110" or land_state(i) = "111")) then
+						humidity_check(i)(2) <= '0';
 					end if;
 				end loop;
 			end if;
