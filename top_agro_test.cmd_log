@@ -1,0 +1,2 @@
+xst -intstyle ise -ifn "/home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/top_agro_test.xst" -ofn "/home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/top_agro_test.syr" 
+xst -intstyle ise -ifn "/home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/top_agro_test.xst" -ofn "/home/gowtham/Desktop/acads/sem4/CS254/project/agro_dispenser/top_agro_test.syr" 

@@ -156,7 +156,7 @@ process(clk)
 			end if;
 				
 			for i in 0 to 7 loop
-				if(tilling(i)='1' and counter>=area(i)) then				--untill the whole area is tilled
+				if(tilling(i)='1' and counter>=area(i)+speed_tiller) then				--untill the whole area is tilled
 					till_gnt<="00000000";
 					start<='0';
 					counter<="0000000000000000";
