@@ -98,6 +98,7 @@ COMPONENT tilling_system
 	PORT(
 		clk : in  STD_LOGIC;
 		  rst : in  STD_LOGIC;
+		  land_state: in eight_three;
 		  tilling : inout  STD_LOGIC_VECtor(7 downto 0);
 		  barren_count : in eight_eight;
 		  speed_tiller : in STD_LOGIC_VECtor(7 downto 0);
@@ -123,6 +124,7 @@ COMPONENT watering_system
 	PORT(
 		clk : in  STD_LOGIC;
 		  rst : in  STD_LOGIC;
+		  dts: std_logic_vector(21 downto 0);
 		  watering : inout  STD_LOGIC_VECtor(7 downto 0);
 		  water_request : in STD_LOGIC_VECtor(7 downto 0)
 	);
@@ -204,6 +206,7 @@ tilling_system1 : tilling_system
 		 clk=>clk,
 		  rst=>rst, 
 		  tilling=>tilling,
+		  land_state=>land_state,
 		  barren_count=>barren_count,
 		  speed_tiller=>speed_tiller,
 		  area=>area 
@@ -226,6 +229,7 @@ watering_system1 : watering_system
 	PORT MAP(
 		  clk=>clk,
 		  rst=>rst,
+		  dts=>dts,
 		  watering=>watering,
 		  water_request=>water_request
 	);

@@ -62,7 +62,7 @@ COMPONENT dispenser_queue
 		  dispensing : in  STD_LOGIC_VECTOR(7 downto 0);
 		  breadth : in  STD_LOGIC_VECTOR(7 downto 0);
 		  area : in eight_sixteen;
-		  dispense_gnt : out  STD_LOGIC_VECTOR(7 downto 0)
+		  dispense_gnt : inout  STD_LOGIC_VECTOR(7 downto 0)
 	);
 END COMPONENT;
 

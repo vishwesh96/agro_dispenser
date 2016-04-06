@@ -66,16 +66,16 @@ ARCHITECTURE behavior OF top_agro_test IS
    --Inputs
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
-   signal humidity : eight_eight := (others => (others => '0'));
-   signal lower_humidity_thresholds : eight_eight :=( others=>(others => '0'));
-   signal upper_humidity_thresholds : eight_eight := (others=>(others => '0'));
-   signal len : std_logic_vector(7 downto 0) := (others => '0');
-   signal breadth : std_logic_vector(7 downto 0) := (others => '0');
-   signal duration : eight_ten := (others=>(others => '0'));
-   signal speed_dispenser : std_logic_vector(7 downto 0) := (others => '0');
-   signal speed_tiller : std_logic_vector(7 downto 0) := (others => '0');
-   signal speed_cutter : std_logic_vector(7 downto 0) := (others => '0');
-   signal crop_count : eight_eight :=(others => (others => '0'));
+   signal humidity : eight_eight := (others => ("11110001"));
+   signal lower_humidity_thresholds : eight_eight :=( others=>("00000000"));
+   signal upper_humidity_thresholds : eight_eight := (others=>("11111111"));
+   signal len : std_logic_vector(7 downto 0) := ("00001000");
+   signal breadth : std_logic_vector(7 downto 0) := ("00001000");
+   signal duration : eight_ten :=(others => ("0000010000"));
+   signal speed_dispenser : std_logic_vector(7 downto 0) := ("00000001");
+   signal speed_tiller : std_logic_vector(7 downto 0) := ("00000010");
+   signal speed_cutter : std_logic_vector(7 downto 0) := ("00000010");
+   signal crop_count : eight_eight :=(others => ("00001000"));
    signal dead_probability : std_logic := '0';
 
 	--BiDirs
@@ -117,9 +117,9 @@ BEGIN
    -- Clock process definitions
    clk_process :process
    begin
-		clk <= '0';
-		wait for clk_period/2;
 		clk <= '1';
+		wait for clk_period/2;
+		clk <= '0';
 		wait for clk_period/2;
    end process;
  

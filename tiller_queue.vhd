@@ -38,7 +38,8 @@ entity tiller_queue is
            area : in  eight_sixteen;
            rst  : in  STD_LOGIC;
            clk : in  STD_LOGIC;
-           till_gnt : out  STD_LOGIC_VECTOR(7 downto 0));
+			  land_state : in eight_three;
+           till_gnt : inout  STD_LOGIC_VECTOR(7 downto 0));
 end tiller_queue;
 
 architecture Behavioral of tiller_queue is
@@ -109,35 +110,35 @@ process(clk)
 			pop<= dout;
 			wr_en<='0';
 			
-			if (to_integer(unsigned(barren_count(0))) = 3 or to_integer(unsigned(barren_count(0)))=30) and not(present(0)='1') then
+			if ((((to_integer(unsigned(barren_count(0))) = 3) and land_state(0)="000") or ((to_integer(unsigned(barren_count(0)))=30 )and land_state(0)="010"))and not(present(0)='1')) then
 				din<="00000001";
 				present(0)<='1';
 				wr_en<='1';
-			elsif (to_integer(unsigned(barren_count(1))) = 3 or to_integer(unsigned(barren_count(1)))=30)  and not(present(1)='1') then
+			elsif ((((to_integer(unsigned(barren_count(1))) = 3) and land_state(1)="000") or ((to_integer(unsigned(barren_count(1)))=30)and land_state(1)="010")) and not(present(1)='1')) then
 				din<="00000010";
 				present(1)<='1';
 				wr_en<='1';
-			elsif (to_integer(unsigned(barren_count(2))) = 3 or to_integer(unsigned(barren_count(2)))=30)  and not(present(2)='1') then
+			elsif ((((to_integer(unsigned(barren_count(2))) = 3) and land_state(2)="000") or ((to_integer(unsigned(barren_count(2)))=30)and land_state(2)="010")) and not(present(2)='1')) then
 				din<="00000100";
 				present(2)<='1';
 				wr_en<='1';
-			elsif (to_integer(unsigned(barren_count(3))) = 3 or to_integer(unsigned(barren_count(3)))=30) and not(present(3)='1') then
+			elsif ((((to_integer(unsigned(barren_count(3))) = 3) and land_state(3)="000") or ((to_integer(unsigned(barren_count(3)))=30)and land_state(3)="010")) and not(present(3)='1')) then
 				din<="00001000";
 				present(3)<='1';
 				wr_en<='1';
-			elsif(to_integer(unsigned(barren_count(4))) = 3 or to_integer(unsigned(barren_count(4)))=30)  and not(present(4)='1') then
+			elsif((((to_integer(unsigned(barren_count(4))) = 3) and land_state(4)="000") or ((to_integer(unsigned(barren_count(4)))=30)and land_state(4)="010")) and not(present(4)='1')) then
 				din<="00010000";
 				present(4)<='1';
 				wr_en<='1';
-			elsif (to_integer(unsigned(barren_count(5))) = 3 or to_integer(unsigned(barren_count(5)))=30) and not(present(5)='1') then
+			elsif((((to_integer(unsigned(barren_count(5))) = 3) and land_state(5)="000") or ((to_integer(unsigned(barren_count(5)))=30)and land_state(5)="010")) and not(present(5)='1')) then
 				din<="00100000";
 				present(5)<='1';
 				wr_en<='1';
-			elsif (to_integer(unsigned(barren_count(6))) = 3 or to_integer(unsigned(barren_count(6)))=30)  and not(present(6)='1')then
+			elsif((((to_integer(unsigned(barren_count(6))) = 3) and land_state(6)="000") or ((to_integer(unsigned(barren_count(6)))=30)and land_state(6)="010")) and not(present(6)='1')) then
 				din<="01000000";
 				present(6)<='1';
 				wr_en<='1';
-			elsif (to_integer(unsigned(barren_count(7))) = 3 or to_integer(unsigned(barren_count(7)))=30)  and not(present(7)='1') then
+			elsif((((to_integer(unsigned(barren_count(7))) = 3) and land_state(7)="000") or ((to_integer(unsigned(barren_count(7)))=30)and land_state(7)="010")) and not(present(7)='1')) then
 				din<="10000000";
 				present(7)<='1';
 				wr_en<='1';
@@ -147,13 +148,13 @@ process(clk)
 				counter <=counter +speed_tiller;					--increment by area tilled in 1 second
 			end if;
 			
-			if read_counter="010" then
+			--if read_counter="000" then
 				for i in 0 to 7 loop
-					if pop(i)='1' then
+					if pop(i)='1' and till_gnt(i)='0' then
 						present(i)<='0';
 					end if;
 				end loop;	
-			end if;
+			--end if;
 				
 			for i in 0 to 7 loop
 				if(tilling(i)='1' and counter>=area(i)+speed_tiller) then				--untill the whole area is tilled

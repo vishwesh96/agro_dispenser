@@ -31,12 +31,12 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity waterer_queue is
-	Generic( dts : std_logic_vector(21 downto 0) :="0000000000000000011111");
     Port ( clk : in STD_LOGIC;
 			  rst : in STD_LOGIC;
+			  dts : std_logic_vector(21 downto 0) :="0000000000000000011111";
 			  watering : in  STD_LOGIC_VECTOR(7 downto 0);
            water_request : in  STD_LOGIC_VECTOR(7 downto 0);
-           water_gnt : out  STD_LOGIC_VECTOR(7 downto 0));
+           water_gnt : inout  STD_LOGIC_VECTOR(7 downto 0));
 end waterer_queue;
 
 architecture Behavioral of waterer_queue is
@@ -143,13 +143,13 @@ process(clk)
 				if start = '1' then							--incremented every second
 					counter <=counter +'1';
 				end if;
-				if read_counter="010" then
+				--if read_counter="010" then
 					for i in 0 to 7 loop
-						if pop(i)='1' then
+						if pop(i)='1' and water_gnt(i)='0' then
 							present(i)<='0';
 						end if;
 					end loop;	
-				end if;
+				--end if;
 
 				for i in 0 to 7 loop
 					if(watering(i)='1' and counter=dts) then			--for one day

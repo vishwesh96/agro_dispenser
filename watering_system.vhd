@@ -33,6 +33,7 @@ use ieee.std_logic_unsigned.all;
 entity watering_system is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
+			  dts : in  std_logic_vector(21 downto 0) :="0000000000000000011111";
            watering : inout  STD_LOGIC_VECtor(7 downto 0);
 			  water_request : in STD_LOGIC_VECtor(7 downto 0));
 end watering_system;
@@ -51,9 +52,10 @@ COMPONENT waterer_queue
 	PORT(
 			 clk : in STD_LOGIC;
 			  rst : in STD_LOGIC;
+			  dts :  std_logic_vector(21 downto 0);
 			  watering : in  STD_LOGIC_VECTOR(7 downto 0);
            water_request : in  STD_LOGIC_VECTOR(7 downto 0);
-           water_gnt : out  STD_LOGIC_VECTOR(7 downto 0)
+           water_gnt : inout  STD_LOGIC_VECTOR(7 downto 0)
 	);
 END COMPONENT;
 
@@ -76,6 +78,7 @@ waterer_queue1 :waterer_queue
 			 clk=>clk, 
 			  rst=>rst,
 			  watering=>watering, 
+			  dts=>dts,
            water_request=>water_request, 
            water_gnt=>water_gnt
 	);

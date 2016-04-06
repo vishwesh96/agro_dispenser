@@ -61,7 +61,7 @@ COMPONENT cutter_queue
 			  cutting : in  STD_LOGIC_VECTOR(7 downto 0);			  
 			  speed_cutter : in  STD_LOGIC_VECTOR(7 downto 0);
            cutting_request : in  STD_LOGIC_VECTOR(7 downto 0);
-           cut_gnt : out  STD_LOGIC_VECTOR(7 downto 0)
+           cut_gnt : inout  STD_LOGIC_VECTOR(7 downto 0)
 	);
 END COMPONENT;
 

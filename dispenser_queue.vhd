@@ -42,7 +42,7 @@ entity dispenser_queue is
            breadth : in  STD_LOGIC_VECTOR(7 downto 0);
 			  area : in eight_sixteen;
            land_state : in  eight_three;
-           dispense_gnt : out  STD_LOGIC_VECTOR(7 downto 0));
+           dispense_gnt : inout  STD_LOGIC_VECTOR(7 downto 0));
 end dispenser_queue;
 
 architecture Behavioral of dispenser_queue is
@@ -94,7 +94,7 @@ process(clk)
 			dispense_gnt<="00000000";
 			wr_en<='0';
 			rd_en<='0';
-			counter<="0000000000000000";
+			counter<="0000000000000001";
 			present<="00000000";
 			pop<="00000000";
 			start<='0';	
@@ -158,22 +158,22 @@ process(clk)
 				end if;
 			end if;
 			
-			if read_counter="010" then
+			--if read_counter="010" then
 				for i in 0 to 7 loop
-					if pop(i)='1' then
+					if pop(i)='1' and dispense_gnt(i) ='0' then--and humidity_check(i)(0)='0' then
 						present(i)<='0';
 					end if;
 				end loop;	
-			end if;
+			--end if;
 				
 			for i in 0 to 7 loop
 				if(dispensing(i)='1') then
-					if(counter>=(area(i)+std_logic_vector(shift_right(unsigned(breadth),3)))) then				--untill the whole area is tilled
+					if humidity_check(i)(0)='1' then
+						start<='0';				
+					elsif(counter>=(area(i)+std_logic_vector(shift_right(unsigned(breadth),3)))) then				--untill the whole area is tilled
 						dispense_gnt<="00000000";
 						start<='0';
-						counter<="0000000000000000";
-					elsif humidity_check(i)(0)='1' then
-						start<='0';
+						counter<="0000000000000001";
 					else 
 						start<='1';
 					end if;

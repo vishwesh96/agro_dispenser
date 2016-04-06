@@ -34,6 +34,7 @@ entity tilling_system is
            rst : in  STD_LOGIC;
            tilling : inout  STD_LOGIC_VECtor(7 downto 0);
 			  barren_count : in eight_eight;
+			  land_state : in eight_three;
 			  speed_tiller : in STD_LOGIC_VECtor(7 downto 0);
 			  area : in eight_sixteen);
 end tilling_system;
@@ -53,10 +54,11 @@ COMPONENT tiller_queue
 			  speed_tiller : in  STD_LOGIC_VECTOR(7 downto 0);  --m2 per sec
            barren_count : in  eight_eight;
            tilling : in  STD_LOGIC_VECTOR(7 downto 0);
+			  land_state : in eight_three;
            area : in  eight_sixteen;
            rst  : in  STD_LOGIC;
            clk : in  STD_LOGIC;
-           till_gnt : out  STD_LOGIC_VECTOR(7 downto 0)
+           till_gnt : inout  STD_LOGIC_VECTOR(7 downto 0)
 	);
 END COMPONENT;
 
@@ -81,6 +83,7 @@ tiller_queue1 :tiller_queue
 			  speed_tiller=>speed_tiller, --m2 per sec
            barren_count=>barren_count,
            tilling=>tilling,
+			  land_state=>land_state,
            area=>area,
            till_gnt=>till_gnt
 	);

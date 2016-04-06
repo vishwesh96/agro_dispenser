@@ -38,7 +38,7 @@ entity cutter_queue is
            crop_count : in  eight_eight;
            area : in  eight_sixteen;
            speed_cutter : in  STD_LOGIC_VECTOR(7 downto 0);			-- num crops/sec
-           cut_gnt : out  STD_LOGIC_VECTOR(7 downto 0));
+           cut_gnt : inout  STD_LOGIC_VECTOR(7 downto 0));
 end cutter_queue;
 
 architecture Behavioral of cutter_queue is
@@ -147,23 +147,23 @@ process(clk)
 				counter <=counter +speed_cutter;					--increment by no. of crops cut in one second
 			end if;
 			
-			if read_counter="010" then
+			--if read_counter="010" then
 				for i in 0 to 7 loop
-					if pop(i)='1' then
+					if pop(i)='1' and cut_gnt(i)='0' then
 						present(i)<='0';
 					end if;
 				end loop;	
-			end if;
+			--end if;
 				
 			for i in 0 to 7 loop
-				if(cutting(i)='1' and counter>=area(i)*crop_count(i)) then				--untill all the number of crops are cut
+				if(cutting(i)='1' and( counter>=area(i)*crop_count(i))) then				--untill all the number of crops are cut
 					cut_gnt<="00000000";
 					start<='0';
 					counter<="000000000000000000000000";
 				end if;
 			end loop;
 			
-			if (cutting  = "00000000") and (empty='0') and (read_counter="100") then
+			if (cut_gnt  = "00000000") and (empty='0') and (read_counter="100") then
 				rd_en<='1';
 				start<='1';
 				read_counter<="000";
