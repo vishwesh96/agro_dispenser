@@ -4,3 +4,6 @@ crop_ht removeed from cutetr queue
 area+breadth ---dispense queue
 tilling and len removed from dispenser queue
 remove water request output from dispenser queue
+land_sate changer bock added
+land states removed for machines.
+check if crop is dead in sown state.(i. humidity_check(2) can be '1' only when in sown state else it is '0' in any other state)

@@ -43,6 +43,7 @@ ARCHITECTURE behavior OF top_agro_test IS
     PORT(
          clk : IN  std_logic;
          rst : IN  std_logic;
+			dead_humidity_thresholds : in eight_eight;
          humidity : IN  eight_eight;
          lower_humidity_thresholds : eight_eight;
          upper_humidity_thresholds : eight_eight;
@@ -58,7 +59,10 @@ ARCHITECTURE behavior OF top_agro_test IS
          dispensing : INOUT  std_logic_vector(7 downto 0);
          watering : INOUT  std_logic_vector(7 downto 0);
          cutting : INOUT  std_logic_vector(7 downto 0);
-         health_report : OUT  std_logic
+         health_report : OUT  std_logic;
+			mts : in  std_logic_vector(7 downto 0);
+			dts : in std_logic_vector(21 downto 0)  
+			
         );
     END COMPONENT;
     
@@ -77,7 +81,11 @@ ARCHITECTURE behavior OF top_agro_test IS
    signal speed_cutter : std_logic_vector(7 downto 0) := ("00000010");
    signal crop_count : eight_eight :=(others => ("00001000"));
    signal dead_probability : std_logic := '0';
-
+	signal humidity_decrease_rate : std_logic_vector(7 downto 0) :="00000001";  --rate of decrease of humidity if not watered
+	signal humidity_increase_rate : std_logic_vector(7 downto 0) :="00000001";  --rate of increase of humidity if not watered	
+	signal mts : std_logic_vector(7 downto 0) :="00000111";
+	signal dts : std_logic_vector(21 downto 0) :="0000000000000000011111";
+	
 	--BiDirs
    signal tilling : std_logic_vector(7 downto 0);
    signal dispensing : std_logic_vector(7 downto 0);
@@ -99,6 +107,7 @@ BEGIN
           humidity => humidity,
           lower_humidity_thresholds => lower_humidity_thresholds,
           upper_humidity_thresholds => upper_humidity_thresholds,
+			 dead_humidity_thresholds => dead_humidity_thresholds,
           len => len,
           breadth => breadth,
           duration => duration,
@@ -136,5 +145,28 @@ BEGIN
 
       wait;
    end process;
+	
+	
+process(clk)
+	begin
+			for i in 0 to 7 loop				
+				if (watering(i)='1') then
+					humidity(i)<=humidity(i)+humidity_increase_rate-humidity_decrease_rate;
+				else
+					humidity(i)<=humidity(i)-humidity_decrease_rate;					
+				end if;
+				if cutting(i)='1' then
+					if humidity(i) < dead_humdity_thresholds(i) then
+						dead_probability<='1';
+					else
+						--random
+					end if;
+				else 
+					dead_probability<='0';
+				end if;
+			end loop;
+			
+						
+	end process;
 
 END;

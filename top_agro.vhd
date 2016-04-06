@@ -31,11 +31,11 @@ use ieee.std_logic_unsigned.all;
 --use UNISIM.VComponents.all;
 
 entity top_agro is
-	Generic( mts : std_logic_vector(7 downto 0) :="00000111";
-				dts : std_logic_vector(21 downto 0) :="0000000000000000011111"
-			);
+				
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
+			  mts : in std_logic_vector(7 downto 0);
+			  dts : in std_logic_vector(21 downto 0);
            humidity : in  eight_eight;
            lower_humidity_thresholds : in  eight_eight;
            upper_humidity_thresholds : in  eight_eight;

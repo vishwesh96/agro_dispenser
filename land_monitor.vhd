@@ -102,9 +102,9 @@ begin
 					end if;
 				end if;
 				
-				if land_state(i)="101" or land_state(i)="011" then				--water request is high only when land 
-					if humidity_check(i)(0)='1' then		-- state is seeds sown or sowing  and and humidity(i)(0)
-						water_request(i)<='1';				-- is 1
+				if land_state(i)="101" or land_state(i)="011" then							--water request is high only when land 
+					if humidity_check(i)(0)='1' and humidity_check(i)(2)='0' then		-- state is seeds sown or sowing  and and humidity(i)(0)
+						water_request(i)<='1';														-- is 1 and humidity(i)(2) is 0 (i.e. crop is not dead)
 					else
 						water_request(i)<='0';					
 					end if;

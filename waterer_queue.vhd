@@ -33,7 +33,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity waterer_queue is
     Port ( clk : in STD_LOGIC;
 			  rst : in STD_LOGIC;
-			  dts : std_logic_vector(21 downto 0) :="0000000000000000011111";
+			  dts : std_logic_vector(21 downto 0);
+			  humidity_check : eight_two;
 			  watering : in  STD_LOGIC_VECTOR(7 downto 0);
            water_request : in  STD_LOGIC_VECTOR(7 downto 0);
            water_gnt : inout  STD_LOGIC_VECTOR(7 downto 0));
@@ -152,7 +153,7 @@ process(clk)
 				--end if;
 
 				for i in 0 to 7 loop
-					if(watering(i)='1' and counter=dts) then			--for one day
+					if(watering(i)='1' and (counter=dts or (humidity_check(i)(1)='1'))) then			--for one day or untill upper threshold is reached
 						water_gnt<="00000000";
 						start<='0';
 						counter<="0000000000000000000000";
